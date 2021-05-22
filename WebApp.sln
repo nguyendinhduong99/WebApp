@@ -13,7 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "ViewModels\ViewModels.csproj", "{7F22A378-70EF-4398-9EBC-FD31D5047C52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend_API", "Backend_API\Backend_API.csproj", "{3C4D7263-EBB0-468A-9976-E90F725E8548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend_API", "Backend_API\Backend_API.csproj", "{3C4D7263-EBB0-468A-9976-E90F725E8548}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items_các hạng mục giải pháp", "0.Solution Items_các hạng mục giải pháp", "{042C1865-5FA0-435E-A511-3D21061A8EF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructure_cơ sở hạ tầng", "1.Infrastructure_cơ sở hạ tầng", "{9BFAEF1B-7C36-40CE-AA01-60E13E6FE56D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain_miền", "2.Domain_miền", "{65324B9D-E159-4A63-B7AA-8A7812D9DF8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Host_tổ chức", "3.Host_tổ chức", "{69852984-5E2A-4B8A-8FED-B203B6BF4DDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +56,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{25077CAE-D874-4AAB-AEBA-EC242AAF3BE2} = {69852984-5E2A-4B8A-8FED-B203B6BF4DDD}
+		{B3BF7306-9D92-4BEF-8E77-4679AD2EB64C} = {65324B9D-E159-4A63-B7AA-8A7812D9DF8C}
+		{280FAAFA-68BD-4D1C-824E-A64A0EABE621} = {9BFAEF1B-7C36-40CE-AA01-60E13E6FE56D}
+		{E89AAF7D-A121-42C4-AC11-1E049C5BBB8C} = {65324B9D-E159-4A63-B7AA-8A7812D9DF8C}
+		{7F22A378-70EF-4398-9EBC-FD31D5047C52} = {9BFAEF1B-7C36-40CE-AA01-60E13E6FE56D}
+		{3C4D7263-EBB0-468A-9976-E90F725E8548} = {69852984-5E2A-4B8A-8FED-B203B6BF4DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C237287-F877-4726-AF4F-8CCF44A5B96C}
