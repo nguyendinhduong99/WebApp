@@ -1,7 +1,7 @@
 ﻿using Data.Configurations;
 using Data.Entities;
 using Data.Extensions;
-using LongViet_Data.Configurations;
+
 using LongViet_Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LongViet_Data.EF
+namespace Data.EF
 {
-    public class DB_Context : IdentityDbContext<AppUser,AppRole,Guid>
+    public class DB_Context : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<AppUser> AppUser { get; set; }
@@ -29,7 +29,7 @@ namespace LongViet_Data.EF
         public DbSet<CategoryTranslation> Category_Translations { get; set; }
         public DbSet<ProductTranslation> Product_TransLations { get; set; }
         public DbSet<ProductInCategory> Product_in_Category { get; set; }
-
+        public DbSet<ProductImage> ProductImages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configure using Fluent API
@@ -51,6 +51,8 @@ namespace LongViet_Data.EF
 
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             //config ngay trong này, chỉ tạo bảngs
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -61,14 +63,14 @@ namespace LongViet_Data.EF
 
             //Data seeding
 
-           modelBuilder.Seed();
+            modelBuilder.Seed();
 
             //base.OnModelCreating(modelBuilder);
         }
-        public DB_Context( DbContextOptions options) : base(options)
+        public DB_Context(DbContextOptions options) : base(options)
         {
-            
+
         }
-      
+
     }
 }

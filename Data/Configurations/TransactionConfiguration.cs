@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LongViet_Data.Configurations
+namespace Data.Configurations
 {
     public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
     {

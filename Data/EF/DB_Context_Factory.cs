@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace LongViet_Data.EF
+namespace Data.EF
 {
     class DB_Context_Factory : IDesignTimeDbContextFactory<DB_Context>
     {
