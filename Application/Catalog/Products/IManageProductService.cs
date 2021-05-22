@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ViewModels.Catalog.ProductImages;
 using ViewModels.Catalog.Products;
 
-namespace LongViet_Application.Catalog.Products
+namespace Application.Catalog.Products
 {
     public interface IManageProductService
     {
@@ -17,8 +17,7 @@ namespace LongViet_Application.Catalog.Products
         Task<int> Delete_Product(int productId);
         Task AddViewCount(int productId);
 
-        Task<List<ProductViewModel>> GetAll(); //lấy các danh sách thuộc tính muốn hiển thị lên , lấy hết
-        
+
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request); //truyền vô 1 request, lấy có chọn lọc, trong ProductViewModel chỉ cung cấp thông số
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);

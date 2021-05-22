@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ViewModels.Catalog.Products;
 
-namespace LongViet_Application.Catalog.Products
+namespace Application.Catalog.Products
 {
     public interface IPublicProductService
     {
