@@ -17,14 +17,14 @@ using ViewModels.Catalog.Products;
 
 namespace Application.Catalog.Products
 {
-    class ManageProductService : IManageProductService
+    public class ManageProductService : IManageProductService
     {
         //cần khai báo 1 biến nội bộ, chỉ dùng 1 lần    
         private readonly DB_Context _context;
-        private readonly IStorageService _storageService;
+        private readonly IFileStorageService _storageService;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
         //đặt 1 constructor
-        public ManageProductService(DB_Context context, IStorageService storageService)
+        public ManageProductService(DB_Context context, IFileStorageService storageService)
         {
             //cần đầu vào 1 cái DbContext
             //add reference tầng LongViet_Data để lấy LongViet_DB_Context...
@@ -34,9 +34,9 @@ namespace Application.Catalog.Products
             _storageService = storageService;
         }
 
-        public async Task AddViewCount(int ProductId)
+        public async Task Add_ViewCount(int productId)
         {
-            var product = await _context.Products.FindAsync(ProductId);
+            var product = await _context.Products.FindAsync(productId);
             product.ViewCount = product.ViewCount + 1;
             await _context.SaveChangesAsync();
         }
@@ -66,7 +66,8 @@ namespace Application.Catalog.Products
                 }
             };
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync(); //khi save ở db xong thì nó nhả cái thresh phục vụ request khác,chạy backgroud ĐỂ giảm thời gian chờ, 
+             await _context.SaveChangesAsync(); //khi save ở db xong thì nó nhả cái thresh phục vụ request khác,chạy backgroud ĐỂ giảm thời gian chờ, 
+            return product.Id;
         }
 
         public async Task<int> Delete_Product(int productId)
@@ -163,14 +164,24 @@ namespace Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public Task<bool> UpdatePrice(int ProductId, decimal newPrice)
+        public async Task<bool> Update_Price(int productId, decimal newPrice)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new Exception($"Cannot find a product with id: {productId}");
+
+            product.Price = newPrice;
+
+            return await _context.SaveChangesAsync() >0;
         }
 
-        public Task<bool> UpdateStock(int productId, int addedQuantity)
+        public async Task<bool> Update_Stock(int productId, int addedQuantity)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new Exception($"Cannot find a product with id: {productId}");
+
+            product.Stock += addedQuantity;
+
+            return await _context.SaveChangesAsync() > 0;
         }
         private async Task<string> SaveFile(IFormFile file)
         {
@@ -179,7 +190,7 @@ namespace Application.Catalog.Products
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
-        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
+        public async Task<int> Add_Image(int productId, ProductImageCreateRequest request)
         {
             var productImage = new ProductImage()
             {
@@ -200,7 +211,7 @@ namespace Application.Catalog.Products
             return productImage.Id;
         }
 
-        public async Task<int> RemoveImage(int imageId)
+        public async Task<int> Remove_Image(int imageId)
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
@@ -209,7 +220,7 @@ namespace Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
+        public async Task<int> Update_Image(int imageId, ProductImageUpdateRequest request)
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
@@ -258,6 +269,40 @@ namespace Application.Catalog.Products
                     ProductId = i.ProductId,
                     SortOrder = i.SortOrder
                 }).ToListAsync();
+        }
+
+        public async Task<ProductViewModel> GetById(int productId,string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.Product_TransLations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var productViewModel = new ProductViewModel()
+            {
+                //product
+                Id = product.Id,
+                Price = product.Price,
+                OriginalPrice = product.OriginalPrice,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount,
+                DateCreated = product.DateCreated,
+
+                //productTraslation
+                Name = productTranslation != null ? productTranslation.Name :null,
+                //if (productTranslation !=null)
+                //{
+                //    Name = productTranslation.Name;
+                //}
+                //else
+                //{
+                //    Name = null;
+                //}
+                Description = productTranslation !=null ? productTranslation.Description : null,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription :null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle:null,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias:null,
+                LanguageId = productTranslation.LanguageId
+            };
+            return productViewModel;
         }
     }
 }

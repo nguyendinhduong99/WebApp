@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Common
 {
-    public interface IStorageService
+    public interface IFileStorageService
     {
         string GetFileUrl(string fileName);
         Task SaveFileAsync(Stream mediaBinaryStream, string fileName);

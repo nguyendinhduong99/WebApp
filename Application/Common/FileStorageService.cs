@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Common
 {
-    public class FileStorageService : IStorageService
+    public class FileStorageService : IFileStorageService
     {
         private readonly string _userContentFolder;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";

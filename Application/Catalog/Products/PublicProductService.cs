@@ -17,13 +17,14 @@ namespace Application.Catalog.Products
         {
             _context = context;
         }
-        public async Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll(string languageId)
         {
             //1. select + join, using LinQ
             var query = from p in _context.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
                         join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
                         join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        where pt.LanguageId == languageId
                         select new { p, pt, p_i_c };
 
            
@@ -57,6 +58,7 @@ namespace Application.Catalog.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
                         join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
                         join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        where pt.LanguageId == request.languageId
                         select new { p, pt, p_i_c };
 
             //2. filter

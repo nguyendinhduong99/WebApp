@@ -222,7 +222,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 5, 22, 11, 13, 45, 453, DateTimeKind.Local).AddTicks(5968)),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 5, 24, 1, 31, 11, 377, DateTimeKind.Local).AddTicks(6933)),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ShipName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ShipAddress = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
@@ -334,8 +334,8 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Caption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Caption = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SortOrder = table.Column<int>(type: "int", nullable: false),
@@ -447,7 +447,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "7a5ab8c8-9043-4887-831e-9c02b58de47c", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "abef735f-85bf-4c59-91a9-b14fccc2ecfd", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -457,7 +457,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "b4e72724-7f58-447c-9982-2fa9b678a4ad", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "duongrbt@gmail.com", true, "Dinh", "Duong", false, null, "duongrbt@gmail.com", "d", "AQAAAAEAACcQAAAAEII3/zDSipJSTrk7NrohDSV4MZlgTvKMzNahwVLFnEiD9pIqXRC9ulL/RmmDOsAMBw==", null, false, "", false, "d" });
+                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "7ee8e13c-5b98-45a6-8c33-ad60ba8c3622", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "duongrbt@gmail.com", true, "Dinh", "Duong", false, null, "duongrbt@gmail.com", "d", "AQAAAAEAACcQAAAAEBm4h+sRpMUxEaasdf7rbdPhEZY81z8b+04iBB0Axz3jWayEIVtEjMIAn1TU1f8bvQ==", null, false, "", false, "d" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -480,7 +480,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "OriginalPrice", "Price" },
-                values: new object[] { 1, new DateTime(2021, 5, 22, 11, 13, 45, 474, DateTimeKind.Local).AddTicks(664), 100000m, 200000m });
+                values: new object[] { 1, new DateTime(2021, 5, 24, 1, 31, 11, 401, DateTimeKind.Local).AddTicks(4830), 100000m, 200000m });
 
             migrationBuilder.InsertData(
                 table: "CategoryTranslations",
