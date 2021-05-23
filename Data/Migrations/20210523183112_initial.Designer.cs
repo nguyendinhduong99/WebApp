@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DB_Context))]
-    [Migration("20210522041346_initial")]
+    [Migration("20210523183112_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,7 +80,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "7a5ab8c8-9043-4887-831e-9c02b58de47c",
+                            ConcurrencyStamp = "abef735f-85bf-4c59-91a9-b14fccc2ecfd",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -157,7 +157,7 @@ namespace Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4e72724-7f58-447c-9982-2fa9b678a4ad",
+                            ConcurrencyStamp = "7ee8e13c-5b98-45a6-8c33-ad60ba8c3622",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "duongrbt@gmail.com",
                             EmailConfirmed = true,
@@ -166,7 +166,7 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "duongrbt@gmail.com",
                             NormalizedUserName = "d",
-                            PasswordHash = "AQAAAAEAACcQAAAAEII3/zDSipJSTrk7NrohDSV4MZlgTvKMzNahwVLFnEiD9pIqXRC9ulL/RmmDOsAMBw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBm4h+sRpMUxEaasdf7rbdPhEZY81z8b+04iBB0Axz3jWayEIVtEjMIAn1TU1f8bvQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -414,7 +414,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 5, 22, 11, 13, 45, 453, DateTimeKind.Local).AddTicks(5968));
+                        .HasDefaultValue(new DateTime(2021, 5, 24, 1, 31, 11, 377, DateTimeKind.Local).AddTicks(6933));
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -476,10 +476,14 @@ namespace Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Caption")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -488,6 +492,7 @@ namespace Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImagePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDefault")
@@ -660,7 +665,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 5, 22, 11, 13, 45, 474, DateTimeKind.Local).AddTicks(664),
+                            DateCreated = new DateTime(2021, 5, 24, 1, 31, 11, 401, DateTimeKind.Local).AddTicks(4830),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,

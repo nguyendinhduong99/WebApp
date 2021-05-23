@@ -11,7 +11,7 @@ namespace Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductImage> builder)
         {
-            builder.ToTable("Hinh_Anh");
+            builder.ToTable("ProductImage");
             builder.HasKey(d => d.Id);
             builder.Property(d => d.Id).UseIdentityColumn();
             builder.HasOne(d => d.Product).WithMany(d => d.ProductImages).HasForeignKey(d => d.ProductId);
