@@ -89,10 +89,10 @@ namespace Backend_API.Controllers
 
         //Update_Price
         // http://localhost:port/product
-        [HttpPut("price/{id}/{newPrice}")]
-        public async Task<IActionResult> Update_Price(int productId, decimal newPrice)
+        [HttpPut("Cập nhật giá sản phẩm")]
+        public async Task<IActionResult> Update_Price(int id, decimal newPrice)
         {
-            var isSuccessful = await _manageProductService.Update_Price(productId, newPrice);
+            var isSuccessful = await _manageProductService.Update_Price(id, newPrice);
             if (isSuccessful)
                 return Ok();
 
