@@ -17,7 +17,8 @@ namespace Application.Catalog.Products
         {
             _context = context;
         }
-        public async Task<List<ProductViewModel>> GetAll(string languageId)
+       
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId,GetPublicProductPagingRequest request)
         {
             //1. select + join, using LinQ
             var query = from p in _context.Products
@@ -25,40 +26,6 @@ namespace Application.Catalog.Products
                         join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
                         join c in _context.Category on p_i_c.CategoryId equals c.Id
                         where pt.LanguageId == languageId
-                        select new { p, pt, p_i_c };
-
-           
-            var data = await query.Select(x => new ProductViewModel()
-            {
-                //bảng product
-                Id = x.p.Id,
-                Price = x.p.Price,
-                OriginalPrice = x.p.OriginalPrice,
-                Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount,
-                DateCreated = x.p.DateCreated,
-
-                //bảng product translate
-                Name = x.pt.Name,
-                Description = x.pt.Description,
-                Details = x.pt.Details,
-                LanguageId = x.pt.LanguageId,
-                SeoAlias = x.pt.SeoAlias,
-                SeoDescription = x.pt.SeoDescription,
-                SeoTitle = x.pt.SeoTitle
-            }).ToListAsync();
-
-            return data;
-        }
-
-        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
-        {
-            //1. select + join, using LinQ
-            var query = from p in _context.Products
-                        join pt in _context.Product_TransLations on p.Id equals pt.ProductId
-                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
-                        join c in _context.Category on p_i_c.CategoryId equals c.Id
-                        where pt.LanguageId == request.languageId
                         select new { p, pt, p_i_c };
 
             //2. filter
