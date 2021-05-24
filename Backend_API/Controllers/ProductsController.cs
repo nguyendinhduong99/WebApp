@@ -8,40 +8,31 @@ namespace Backend_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IPublicProductService _publicProductService;
         private readonly IManageProductService _manageProductService;
-        public ProductController(IPublicProductService publicProductService, IManageProductService manageProductService)
+
+        public ProductsController(IPublicProductService publicProductService, IManageProductService manageProductService)
         {
             _publicProductService = publicProductService;
             _manageProductService = manageProductService;
         }
 
-        //get product
-        // http://localhost:port/product
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> Get( string languageId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var product = await _publicProductService.GetAll(languageId);
-            return Ok(product);
-        }
+        #region phân trang
+
         //get all by categoryId
-        // http://localhost:port/product/public-paging
-        [HttpGet("public-paging/{languageId}")]
-        public async Task<IActionResult> Get([FromQuery] GetPublicProductPagingRequest request)//lay du lieu, tham so tu cau query ra
+        // http://localhost:port/product? pageIndex= , pageSize= , categoryId=
+        [HttpGet("{languageId}")]
+        public async Task<IActionResult> GetAllPaging(string langugeId, [FromQuery] GetPublicProductPagingRequest request)//lay du lieu, tham so tu cau query ra
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var product = await _publicProductService.GetAllByCategoryId(request);
+            var product = await _publicProductService.GetAllByCategoryId(langugeId, request);
             return Ok(product);
         }
+
+        #endregion phân trang
+
+
 
         //trong thawngf có Create_Product, Update_Product, UpdatePrice, UpdateStock, Delete_Product, AddViewCount, GetAllPaging,
         //AddImage, RemoveImage, UpdateImage, GetImageById, GetListImages
@@ -53,16 +44,13 @@ namespace Backend_API.Controllers
         //patch
         /*.....................................................................................................*/
 
-        //get by id
+        #region product
+
         // http://localhost:port/product/1
-        [HttpGet("{id}/{languageId}")]
-        public async Task<IActionResult> GetById(int id,string languageId)
+        [HttpGet("{productId}/{languageId}")]
+        public async Task<IActionResult> GetById(int productId, string languageId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var product = await _manageProductService.GetById(id,languageId);
+            var product = await _manageProductService.GetById(productId, languageId);
             if (product == null) return BadRequest("Cannot find Id product");//400
             return Ok(product);//200
         }
@@ -80,10 +68,11 @@ namespace Backend_API.Controllers
             if (productId == 0) return BadRequest();//trả về 400:lỗi
             //return Ok(result); //trả về 200:ok
 
-            var product = _manageProductService.GetById(productId,request.LanguageId);
+            var product = _manageProductService.GetById(productId, request.LanguageId);
             //muốn trả về 201 thì trả về object
-            return CreatedAtAction(nameof(GetById),new { id=productId}, product);
+            return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
+
         //Update_Product
         // http://localhost:port/product
         [HttpPut]
@@ -96,47 +85,54 @@ namespace Backend_API.Controllers
             var affected_result = await _manageProductService.Update_Product(request);
             if (affected_result == 0) return BadRequest();//trả về 400:lỗi
             return Ok(); //trả về 200:ok
-        
         }
+
         //Delete_Product
         // http://localhost:port/product
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete_Product(int id)
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> Delete_Product(int productId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var affected_result = await _manageProductService.Delete_Product(id);
+            var affected_result = await _manageProductService.Delete_Product(productId);
             if (affected_result == 0) return BadRequest();//trả về 400:lỗi
             return Ok(); //trả về 200:ok
         }
 
+        #endregion product
+
+
+
+        #region price
+
         //Update_Price
         // http://localhost:port/product
-        [HttpPut("Cập nhật giá sản phẩm")]
-        public async Task<IActionResult> Update_Price(int id, decimal newPrice)
+        [HttpPatch("{productId}/{newPrice}")]//update 1 phần thì dùng HttpPatch
+        public async Task<IActionResult> Update_Price(int productId, decimal newPrice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var isSuccessful = await _manageProductService.Update_Price(id, newPrice);
+            var isSuccessful = await _manageProductService.Update_Price(productId, newPrice);
             if (isSuccessful)
                 return Ok();
 
             return BadRequest();
         }
 
+        #endregion price
+
+
+
+        #region image
 
         //image
         [HttpGet("Lấy id ảnh")]
         public async Task<IActionResult> GetImageById(int imageId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var image = await _manageProductService.GetImageById(imageId);
             if (image == null) return BadRequest("Cannot find Id product");//400
             return Ok(image);//200
@@ -149,7 +145,7 @@ namespace Backend_API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var imageId = await _manageProductService.Add_Image(productId,request);
+            var imageId = await _manageProductService.Add_Image(productId, request);
             if (imageId == 0) return BadRequest();//trả về 400:lỗi
             //return Ok(result); //trả về 200:ok
 
@@ -158,20 +154,20 @@ namespace Backend_API.Controllers
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
 
-        [HttpDelete("{Xóa Ảnh SP}")]
+        [HttpDelete("{imageId}")]
         public async Task<IActionResult> DeleteImage(int imageId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var image= await _manageProductService.Remove_Image(imageId);
+            var image = await _manageProductService.Remove_Image(imageId);
             if (image == 0) return BadRequest();//trả về 400:lỗi
             return Ok(); //trả về 200:ok
         }
-        
-        [HttpPut("Cập Nhật Ảnh Sp")]
-        public async Task<IActionResult> UpdateImage(int imageId,[FromForm] ProductImageUpdateRequest request)
+
+        [HttpPut("{imageId}")]
+        public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -181,7 +177,7 @@ namespace Backend_API.Controllers
             if (image == 0) return BadRequest();//trả về 400:lỗi
             return Ok(); //trả về 200:ok
         }
-    }
-        
 
+        #endregion image
+    }
 }
