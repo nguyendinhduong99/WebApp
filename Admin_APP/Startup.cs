@@ -1,5 +1,6 @@
 using Admin_APP.Services;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,11 @@ namespace Admin_APP
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
+            {
+                opt.LoginPath = "/Users/Login/";
+                opt.AccessDeniedPath = "/Users/Forbidden/";
+            });
 
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
@@ -52,6 +58,8 @@ namespace Admin_APP
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

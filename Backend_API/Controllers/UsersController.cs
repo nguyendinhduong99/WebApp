@@ -22,7 +22,7 @@ namespace Backend_API.Controllers
         }
 
         //sign in
-        [HttpPost("SignIn")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn([FromBody] LoginRequest request)
         {

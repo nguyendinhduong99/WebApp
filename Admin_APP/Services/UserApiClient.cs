@@ -24,7 +24,7 @@ namespace Admin_APP.Services
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri("https://localhost:5001");
-            var response = await client.PostAsync("/api/Users/SignIn", httpContent);//post ra 1 cái link
+            var response = await client.PostAsync("/api/Users/Login", httpContent);//post ra 1 cái link
             var token = await response.Content.ReadAsStringAsync();
             return token;
         }
