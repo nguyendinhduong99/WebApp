@@ -22,9 +22,9 @@ namespace Backend_API.Controllers
         }
 
         //sign in
-        [HttpPost("SignIn")]
+        [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn([FromForm] LoginRequest request)
+        public async Task<IActionResult> SignIn([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,13 +34,13 @@ namespace Backend_API.Controllers
             {
                 return BadRequest("Sai tài khoản mật khẩu");
             }
-            return Ok(new { token = resultToken });
+            return Ok(resultToken);
         }
 
         //sign up
         [HttpPost("SignUp")]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp([FromForm] RegisterRequest request)
+        public async Task<IActionResult> SignUp([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
