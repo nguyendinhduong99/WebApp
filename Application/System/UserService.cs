@@ -68,7 +68,7 @@ namespace Application.System
                 Dob = request.Dob,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                UserName = request.UsertName
+                UserName = request.UserName
             };
             var result = await _userManager.CreateAsync(user, request.PassWord);
             if (result.Succeeded) return true;
