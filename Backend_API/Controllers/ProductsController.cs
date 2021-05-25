@@ -1,4 +1,5 @@
 ﻿using Application.Catalog.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ViewModels.Catalog.ProductImages;
@@ -8,6 +9,7 @@ namespace Backend_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IPublicProductService _publicProductService;
@@ -31,8 +33,6 @@ namespace Backend_API.Controllers
         }
 
         #endregion phân trang
-
-
 
         //trong thawngf có Create_Product, Update_Product, UpdatePrice, UpdateStock, Delete_Product, AddViewCount, GetAllPaging,
         //AddImage, RemoveImage, UpdateImage, GetImageById, GetListImages
@@ -103,8 +103,6 @@ namespace Backend_API.Controllers
 
         #endregion product
 
-
-
         #region price
 
         //Update_Price
@@ -124,8 +122,6 @@ namespace Backend_API.Controllers
         }
 
         #endregion price
-
-
 
         #region image
 
