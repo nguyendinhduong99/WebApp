@@ -1,6 +1,6 @@
 ﻿using Application.Catalog.Products;
 using Application.Common;
-using Application.System;
+using Application.System.User;
 using Data.EF;
 using Data.Entities;
 using FluentValidation;
@@ -46,8 +46,7 @@ namespace Backend_API
 
             //Declare DI
             services.AddTransient<IFileStorageService, FileStorageService>();
-            services.AddTransient<IPublicProductService, PublicProductService>();
-            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<IProductService, ProductService>();
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();

@@ -1,5 +1,4 @@
 ﻿using Data.Entities;
-using LongViet_ViewModels.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,9 +10,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModels.Common;
 using ViewModels.System.User;
 
-namespace Application.System
+namespace Application.System.User
 {
     public class UserService : IUserService
     {

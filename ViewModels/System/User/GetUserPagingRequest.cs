@@ -1,7 +1,7 @@
-﻿using LongViet_ViewModels.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ViewModels.Common;
 
 namespace ViewModels.System.User
 {

@@ -1,4 +1,4 @@
-﻿using Application.System;
+﻿using Application.System.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,7 @@ namespace Backend_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -47,6 +48,15 @@ namespace Backend_API.Controllers
             var result = await _userService.Register(request);
             if (result == false) return BadRequest("Đăng ký thất bại");
             return Ok();
+        }
+
+        //phân trang
+        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&Keyword=
+        [HttpGet("{PagingUser}")]
+        public async Task<IActionResult> PagingUser([FromQuery] GetUserPagingRequest request)
+        {
+            var user = await _userService.GetUsersPaging(request);
+            return Ok(user);
         }
     }
 }

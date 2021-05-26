@@ -35,9 +35,17 @@ namespace Admin_APP
                     options.LoginPath = "/Users/Login/";
                     options.AccessDeniedPath = "/Users/Forbidden/";
                 });
+            //services.AddDistributedMemoryCache();
 
             services.AddControllersWithViews()
                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                //options.Cookie.HttpOnly = true;
+                //options.Cookie.IsEssential = true;
+            });
 
             services.AddTransient<IUserApiClient, UserApiClient>();
 
@@ -73,6 +81,8 @@ namespace Admin_APP
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

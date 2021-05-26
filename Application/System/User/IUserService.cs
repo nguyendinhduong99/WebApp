@@ -1,11 +1,11 @@
-﻿using LongViet_ViewModels.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModels.Common;
 using ViewModels.System.User;
 
-namespace Application.System
+namespace Application.System.User
 {
     public interface IUserService
     {

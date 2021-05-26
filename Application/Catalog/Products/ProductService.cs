@@ -2,7 +2,6 @@
 using Data.EF;
 using Data.Entities;
 using LongViet_Data.Entities;
-using LongViet_ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,10 +13,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ViewModels.Catalog.ProductImages;
 using ViewModels.Catalog.Products;
+using ViewModels.Common;
 
 namespace Application.Catalog.Products
 {
-    public class ManageProductService : IManageProductService
+    public class ProductService : IProductService
     {
         //cần khai báo 1 biến nội bộ, chỉ dùng 1 lần
         private readonly DB_Context _context;
@@ -26,7 +26,7 @@ namespace Application.Catalog.Products
         private const string USER_CONTENT_FOLDER_NAME = "user-content";//tên folder chứa ảnh
 
         //đặt 1 constructor
-        public ManageProductService(DB_Context context, IFileStorageService storageService)
+        public ProductService(DB_Context context, IFileStorageService storageService)
         {
             //cần đầu vào 1 cái DbContext
             //add reference tầng LongViet_Data để lấy LongViet_DB_Context...
@@ -328,5 +328,59 @@ namespace Application.Catalog.Products
         }
 
         #endregion Image
+
+        #region Category
+
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
+        {
+            //1. select + join, using LinQ
+            var query = from p in _context.Products
+                        join pt in _context.Product_TransLations on p.Id equals pt.ProductId
+                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
+                        join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        where pt.LanguageId == languageId
+                        select new { p, pt, p_i_c };
+
+            //2. filter
+
+            if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
+            {
+                query = query.Where(p => p.p_i_c.CategoryId == request.CategoryId);
+            }
+
+            //3. Paging = phân trang
+            //phải có totalRow, using frameworkcore
+            int totalRow = await query.CountAsync();
+            var data = await query.Skip((request.pageIndex - 1) * request.pageSize).Take(request.pageSize).Select(x => new ProductViewModel()
+            {
+                //bảng product
+                Id = x.p.Id,
+                Price = x.p.Price,
+                OriginalPrice = x.p.OriginalPrice,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount,
+                DateCreated = x.p.DateCreated,
+
+                //bảng product translate
+                Name = x.pt.Name,
+                Description = x.pt.Description,
+                Details = x.pt.Details,
+                LanguageId = x.pt.LanguageId,
+                SeoAlias = x.pt.SeoAlias,
+                SeoDescription = x.pt.SeoDescription,
+                SeoTitle = x.pt.SeoTitle
+            }).ToListAsync();
+
+            //4. select and projection = chọn và tham chiếu
+            var pagedResult = new PagedResult<ProductViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data //dạng await
+            };
+            return pagedResult;
+        }
+
+        #endregion Category
+
     }
 }
