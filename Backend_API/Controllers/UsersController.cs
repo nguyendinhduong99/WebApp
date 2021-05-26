@@ -52,7 +52,7 @@ namespace Backend_API.Controllers
 
         //phân trang
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&Keyword=
-        [HttpGet("{PagingUser}")]
+        [HttpGet("{paging}")]
         public async Task<IActionResult> PagingUser([FromQuery] GetUserPagingRequest request)
         {
             var user = await _userService.GetUsersPaging(request);
