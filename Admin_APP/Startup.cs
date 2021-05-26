@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ViewModels.System;
+using ViewModels.System.User;
 
 namespace Admin_APP
 {
@@ -28,19 +28,28 @@ namespace Admin_APP
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
-            {
-                opt.LoginPath = "/Users/Login/";
-                opt.AccessDeniedPath = "/Users/Forbidden/";
-            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Users/Login/";
+                    options.AccessDeniedPath = "/Users/Forbidden/";
+                });
 
             services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
+                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
             services.AddTransient<IUserApiClient, UserApiClient>();
 
-            services.AddRazorPages()
-                .AddRazorRuntimeCompilation();
+            IMvcBuilder builder = services.AddRazorPages();
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+#if DEBUG
+            if (environment == Environments.Development)
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ViewModels.System
+namespace ViewModels.System.User
 {
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
