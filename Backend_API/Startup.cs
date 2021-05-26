@@ -52,8 +52,8 @@ namespace Backend_API
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
-            //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
-            //  services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+            services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+            services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
             //services.AddControllersWithViews();
             //Đăng ký xác thực thông thạo cho tất cả các rule trong thằng LoginRequestValidator
