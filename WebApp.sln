@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain_miền", "2.Domain
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Host_tổ chức", "3.Host_tổ chức", "{69852984-5E2A-4B8A-8FED-B203B6BF4DDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin_APP", "Admin_APP\Admin_APP.csproj", "{F952D79D-8619-48E7-B0E4-37F4ED25B0AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin_APP", "Admin_APP\Admin_APP.csproj", "{F952D79D-8619-48E7-B0E4-37F4ED25B0AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
