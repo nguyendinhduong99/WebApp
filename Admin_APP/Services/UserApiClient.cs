@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using ViewModels.System;
+using ViewModels.System.User;
 
 namespace Admin_APP.Services
 {
