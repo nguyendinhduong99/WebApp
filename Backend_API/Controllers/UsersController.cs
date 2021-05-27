@@ -39,14 +39,14 @@ namespace Backend_API.Controllers
         }
 
         //sign up
-        [HttpPost("SignUp")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SignUp([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = await _userService.Register(request);
-            if (result == false) return BadRequest("Đăng ký thất bại");
+            if (!result) return BadRequest("Đăng ký thất bại");
             return Ok();
         }
 

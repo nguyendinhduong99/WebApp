@@ -32,7 +32,7 @@ namespace Admin_APP
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Users/Login/";
+                    options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/Users/Forbidden/";
                 });
             //services.AddDistributedMemoryCache();
@@ -52,12 +52,16 @@ namespace Admin_APP
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-#if DEBUG
-            if (environment == Environments.Development)
-            {
-                builder.AddRazorRuntimeCompilation();
-            }
-#endif
+            services.AddRazorPages()
+        .AddRazorRuntimeCompilation();
+
+            // code omitted for brevity
+            //#if DEBUG
+            //            if (environment == Environments.Development)
+            //            {
+            //                builder.AddRazorRuntimeCompilation();
+            //            }
+            //#endif
         }
 
         // Phương thức này được gọi bởi thời gian chạy. Sử dụng phương pháp này để định cấu hình đường dẫn yêu cầu HTTP.
