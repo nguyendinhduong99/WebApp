@@ -46,7 +46,7 @@ namespace Admin_APP.Services
             var json = JsonConvert.SerializeObject(request);//Tuần tự hóa đối tượng
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
             var response = await client.PostAsync("/api/Users/Login", httpContent);//post ra 1 cái link
             var token = await response.Content.ReadAsStringAsync();
             return token;
@@ -59,7 +59,7 @@ namespace Admin_APP.Services
         public async Task<bool> RegisterUser(RegisterRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);//địa chỉ mặc định 5001
+            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);//địa chỉ mặc định 5001
             var json = JsonConvert.SerializeObject(request);//Tuần tự hóa đối tượng
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
