@@ -17,7 +17,7 @@ using ViewModels.System.User;
 
 namespace Admin_APP.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
@@ -27,6 +27,8 @@ namespace Admin_APP.Controllers
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
+
+        #region Thông tin
 
         public async Task<IActionResult> Index(string keyWord, int pageindex = 1, int pagesize = 10)
         {
@@ -42,36 +44,30 @@ namespace Admin_APP.Controllers
             return View(data);
         }
 
+        #endregion Thông tin
+
+        #region Đăng Ký
+
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Create()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid)
-            {
-                return View(ModelState);
-            }
-            var token = await _userApiClient.Authenticate(request);
-            var userPricipal = this.ValidateToken(token);
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
-            };
-            HttpContext.Session.SetString("Token", token);
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                userPricipal,
-                authProperties
-                );
-            return RedirectToAction("Index", "Home");
+                return View();
+            var result = await _userApiClient.RegisterUser(request);
+            if (result)
+                return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            return View(request);
         }
+
+        #endregion Đăng Ký
+
+        #region Đăng Xuất
 
         [HttpPost]
         public async Task<IActionResult> Logout()
@@ -81,19 +77,6 @@ namespace Admin_APP.Controllers
             return RedirectToAction("Login", "Users");
         }
 
-        //tạo 1 hàm giải mã token = mã thông báo
-        public ClaimsPrincipal ValidateToken(string jwtToken)
-        {
-            IdentityModelEventSource.ShowPII = true;
-            SecurityToken validateToken;
-            TokenValidationParameters validationParameters = new TokenValidationParameters();
-            validationParameters.ValidateLifetime = true;
-            validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
-            validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
-            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-
-            ClaimsPrincipal claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validateToken);
-            return claimsPrincipal;
-        }
+        #endregion Đăng Xuất
     }
 }

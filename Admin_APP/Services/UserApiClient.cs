@@ -23,16 +23,7 @@ namespace Admin_APP.Services
             _configuration = configuration;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
-        {
-            var json = JsonConvert.SerializeObject(request);//Tuần tự hóa đối tượng
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
-            var response = await client.PostAsync("/api/Users/Login", httpContent);//post ra 1 cái link
-            var token = await response.Content.ReadAsStringAsync();
-            return token;
-        }
+        #region GET LIST USER
 
         public async Task<PagedResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request)
         {
@@ -45,5 +36,37 @@ namespace Admin_APP.Services
             var user = JsonConvert.DeserializeObject<PagedResult<UserViewModel>>(body);
             return user;
         }
+
+        #endregion GET LIST USER
+
+        #region ĐĂNG NHẬP
+
+        public async Task<string> Authenticate(LoginRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);//Tuần tự hóa đối tượng
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
+            var response = await client.PostAsync("/api/Users/Login", httpContent);//post ra 1 cái link
+            var token = await response.Content.ReadAsStringAsync();
+            return token;
+        }
+
+        #endregion ĐĂNG NHẬP
+
+        #region ĐĂNG KÝ
+
+        public async Task<bool> RegisterUser(RegisterRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);//địa chỉ mặc định 5001
+            var json = JsonConvert.SerializeObject(request);//Tuần tự hóa đối tượng
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"/api/Users", httpContent);//post ra 1 cái link
+            return response.IsSuccessStatusCode;
+        }
+
+        #endregion ĐĂNG KÝ
     }
 }

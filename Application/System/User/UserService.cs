@@ -80,8 +80,10 @@ namespace Application.System.User
                 UserName = request.UserName
             };
             var result = await _userManager.CreateAsync(user, request.PassWord);
-            if (result.Succeeded) return true;
-            else return false;
+            if (result.Succeeded)
+                return true;
+            else
+                return false;
         }
 
         #endregion ĐĂNG KÝ
