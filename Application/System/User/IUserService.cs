@@ -9,10 +9,14 @@ namespace Application.System.User
 {
     public interface IUserService
     {
-        Task<string> Authenticate(LoginRequest request); //login
+        Task<ApiResult<string>> Authenticate(LoginRequest request); //login
 
-        Task<bool> Register(RegisterRequest request);
+        Task<ApiResult<bool>> Register(RegisterRequest request);
 
-        Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);//lấy danh sách user, trả ra 1 model phân trang PagedResult
+        Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);//lấy danh sách user, trả ra 1 model phân trang PagedResult
+
+        Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
+
+        Task<ApiResult<UserViewModel>> GetById(Guid id);
     }
 }

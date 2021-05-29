@@ -7,6 +7,6 @@ namespace ViewModels.System.User
 {
     public class GetUserPagingRequest : PagingRequestBase
     {
-        public string Keyword { get; set; }
+        public string keyWord { get; set; }
     }
 }
