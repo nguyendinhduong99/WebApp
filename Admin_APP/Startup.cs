@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,20 +33,18 @@ namespace Admin_APP
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Login/Index/";
+                    options.LoginPath = "/Login/Index";
                     options.AccessDeniedPath = "/Users/Forbidden/";
                 });
-            //services.AddDistributedMemoryCache();
 
             services.AddControllersWithViews()
                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
-                //options.Cookie.HttpOnly = true;
-                //options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
 
