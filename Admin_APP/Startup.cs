@@ -48,13 +48,12 @@ namespace Admin_APP
 
             services.AddTransient<IUserApiClient, UserApiClient>();
 
-            IMvcBuilder builder = services.AddRazorPages();
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
 
-            // code omitted for brevity
+            IMvcBuilder builder = services.AddRazorPages();
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            //            // code omitted for brevity
             //#if DEBUG
             //            if (environment == Environments.Development)
             //            {

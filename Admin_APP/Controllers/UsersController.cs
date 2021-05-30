@@ -30,7 +30,7 @@ namespace Admin_APP.Controllers
 
         #region Thông tin
 
-        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 3)
         {
             var request = new GetUserPagingRequest()
             {
@@ -114,5 +114,16 @@ namespace Admin_APP.Controllers
         }
 
         #endregion Cập nhật TK
+
+        #region Chi Tiết
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = await _userApiClient.GetById(id);
+            return View(user.ResultObj);
+        }
+
+        #endregion Chi Tiết
     }
 }

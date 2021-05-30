@@ -125,7 +125,9 @@ namespace Application.System.User
             //4. select and projection = chọn và tham chiếu
             var pagedResult = new PagedResult<UserViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.pageIndex,
+                PageSize = request.pageSize,
                 Items = data //dạng await
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pagedResult);
