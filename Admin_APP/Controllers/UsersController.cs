@@ -40,6 +40,10 @@ namespace Admin_APP.Controllers
             };
             var data = await _userApiClient.GetUserPaging(request);
             ViewBag.Keyword = Keyword;
+            if (TempData["thongbao"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["thongbao"];
+            }
             return View(data.ResultObj);
         }
 
@@ -60,7 +64,11 @@ namespace Admin_APP.Controllers
                 return View();
             var result = await _userApiClient.RegisterUser(request);
             if (result.IsSuccessed)
+            {
+                TempData["thongbao"] = "Thêm OK";
                 return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            }
+
             ModelState.AddModelError("", result.Message);
             return View(request);
         }
@@ -109,7 +117,10 @@ namespace Admin_APP.Controllers
                 return View();
             var result = await _userApiClient.UpdateUser(request.Id, request);
             if (result.IsSuccessed)
+            {
+                TempData["thongbao"] = "Cập Nhật OK";
                 return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            }
             ModelState.AddModelError("", result.Message);
             return View(request);
         }
@@ -145,7 +156,10 @@ namespace Admin_APP.Controllers
                 return View();
             var result = await _userApiClient.Delete(request.Id);
             if (result.IsSuccessed)
+            {
+                TempData["thongbao"] = "Xóa OK";
                 return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            }
             ModelState.AddModelError("", result.Message);
             return View(request);
         }
