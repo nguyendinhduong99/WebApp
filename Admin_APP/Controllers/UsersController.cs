@@ -39,6 +39,7 @@ namespace Admin_APP.Controllers
                 pageSize = pageSize
             };
             var data = await _userApiClient.GetUserPaging(request);
+            ViewBag.Keyword = Keyword;
             return View(data.ResultObj);
         }
 
@@ -73,7 +74,7 @@ namespace Admin_APP.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
-            return RedirectToAction("Login", "Users");
+            return RedirectToAction("Index", "Login");
         }
 
         #endregion Đăng Xuất

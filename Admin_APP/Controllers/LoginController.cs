@@ -60,7 +60,7 @@ namespace Admin_APP.Controllers
                 return View(ModelState);
             }
             var result = await _userApiClient.Authenticate(request);
-            if (result == null)
+            if (result.ResultObj == null)
             {
                 ModelState.AddModelError("", result.Message);
                 return View();
