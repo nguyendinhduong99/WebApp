@@ -13,9 +13,27 @@
     </ol>
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            <a class="btn btn-success" asp-action="Create" asp-controller="Users">Tạo Mới</a>
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Users">Tạo Mới</a>
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+                                <button type="button" onclick="window.location.href='/Users/Index'" class="btn btn-danger">Làm Mới</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>

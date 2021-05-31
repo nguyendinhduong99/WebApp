@@ -26,6 +26,7 @@
                                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng Nhập</h3></div>
                                 <div class="card-body">
                                     <form asp-action="Index" asp-controller="Login" method="post">
+
                                         <div class="form-floating mb-3">
                                             <input class="form-control py-4" asp-for="UserName" type="text" placeholder="Nhập tài khoản" />
                                             <label>Tài Khoản</label>
@@ -42,6 +43,8 @@
                                             <a class="small" href="/User/ForgotPassWord">Quên Mật Khẩu?</a>
                                             <button class="btn btn-primary" type="submit">Đăng Nhập</button>
                                         </div>
+
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
