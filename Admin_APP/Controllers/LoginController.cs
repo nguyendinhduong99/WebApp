@@ -60,6 +60,11 @@ namespace Admin_APP.Controllers
                 return View(ModelState);
             }
             var result = await _userApiClient.Authenticate(request);
+            if (result == null)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
             var userPricipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
