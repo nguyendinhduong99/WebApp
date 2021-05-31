@@ -83,7 +83,9 @@ namespace Application.Catalog.Products
             //4. select and projection = chọn và tham chiếu
             var pagedResult = new PagedResult<ProductViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.pageIndex,
+                PageSize = request.pageSize,
                 Items = data //dạng await
             };
             return pagedResult;
@@ -374,13 +376,14 @@ namespace Application.Catalog.Products
             //4. select and projection = chọn và tham chiếu
             var pagedResult = new PagedResult<ProductViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.pageIndex,
+                PageSize = request.pageSize,
                 Items = data //dạng await
             };
             return pagedResult;
         }
 
         #endregion Category
-
     }
 }

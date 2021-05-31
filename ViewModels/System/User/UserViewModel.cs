@@ -7,6 +7,7 @@ namespace ViewModels.System.User
 {
     public class UserViewModel
     {
+        [Display(Name = "Mã User")]
         public Guid Id { get; set; }
 
         [Display(Name = "Họ")]

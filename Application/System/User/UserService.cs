@@ -125,7 +125,9 @@ namespace Application.System.User
             //4. select and projection = chọn và tham chiếu
             var pagedResult = new PagedResult<UserViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.pageIndex,
+                PageSize = request.pageSize,
                 Items = data //dạng await
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pagedResult);
@@ -172,6 +174,20 @@ namespace Application.System.User
                 UserName = user.UserName
             };
             return new ApiSuccessResult<UserViewModel>(userVm);
+        }
+
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User không tồn tại");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa thất bại!");
         }
     }
 }

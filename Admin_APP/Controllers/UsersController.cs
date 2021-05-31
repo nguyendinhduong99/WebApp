@@ -30,7 +30,7 @@ namespace Admin_APP.Controllers
 
         #region Thông tin
 
-        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 3)
         {
             var request = new GetUserPagingRequest()
             {
@@ -114,5 +114,41 @@ namespace Admin_APP.Controllers
         }
 
         #endregion Cập nhật TK
+
+        #region Chi Tiết
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = await _userApiClient.GetById(id);
+            return View(user.ResultObj);
+        }
+
+        #endregion Chi Tiết
+
+        #region Xóa
+
+        [HttpGet]
+        public IActionResult Delete(Guid id)
+        {
+            return View(new UserDeleteRequest()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var result = await _userApiClient.Delete(request.Id);
+            if (result.IsSuccessed)
+                return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            ModelState.AddModelError("", result.Message);
+            return View(request);
+        }
+
+        #endregion Xóa
     }
 }
