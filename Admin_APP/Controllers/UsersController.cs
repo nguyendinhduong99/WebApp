@@ -180,26 +180,6 @@ namespace Admin_APP.Controllers
             return View(roleAssignRequest);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
-        {
-            if (!ModelState.IsValid)
-                return View();
-
-            var result = await _roleApiClient.RoleAssign(request.Id, request);
-
-            if (result.IsSuccessed)
-            {
-                TempData["result"] = "Cập nhật quyền thành công";
-                return RedirectToAction("Index");
-            }
-
-            ModelState.AddModelError("", result.Message);
-            var roleAssignRequest = await GetRoleAssignRequest(request.Id);
-
-            return View(roleAssignRequest);
-        }
-
         private async Task<RoleAssignRequest> GetRoleAssignRequest(Guid id)
         {
             var userObj = await _userApiClient.GetById(id);
@@ -215,6 +195,26 @@ namespace Admin_APP.Controllers
                 });
             }
             return roleAssignRequest;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _roleApiClient.RoleAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                TempData["thongbao"] = "Cập nhật quyền thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetRoleAssignRequest(request.Id);
+
+            return View(roleAssignRequest);
         }
 
         #endregion Phân Quyền
