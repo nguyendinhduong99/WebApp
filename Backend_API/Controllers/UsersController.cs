@@ -1,4 +1,5 @@
-﻿using Application.System.User;
+﻿using Application.System.Role;
+using Application.System.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.Common;
 using ViewModels.System.User;
 
 namespace Backend_API.Controllers
@@ -22,7 +24,8 @@ namespace Backend_API.Controllers
             _userService = userService;
         }
 
-        //sign in
+        #region sign in
+
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn([FromBody] LoginRequest request)
@@ -38,7 +41,10 @@ namespace Backend_API.Controllers
             return Ok(result);
         }
 
-        //sign up
+        #endregion sign in
+
+        #region sign up
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SignUp([FromBody] RegisterRequest request)
@@ -50,7 +56,10 @@ namespace Backend_API.Controllers
             return Ok(result);
         }
 
-        //phân trang
+        #endregion sign up
+
+        #region phân trang
+
         //http://localhost/api/Users/paging?pageIndex=1&pageSize=10&Keyword=
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
@@ -59,12 +68,20 @@ namespace Backend_API.Controllers
             return Ok(user);
         }
 
+        #endregion phân trang
+
+        #region Lấy ID
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var user = await _userService.GetById(id);
             return Ok(user);
         }
+
+        #endregion Lấy ID
+
+        #region Update
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
@@ -77,11 +94,17 @@ namespace Backend_API.Controllers
             return Ok(result);
         }
 
+        #endregion Update
+
+        #region Delete
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _userService.Delete(id);
             return Ok(result);
         }
+
+        #endregion Delete
     }
 }

@@ -1,4 +1,5 @@
-﻿using Admin_APP.Services;
+﻿using Admin_APP.Services.Role;
+using Admin_APP.Services.User;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -47,7 +48,7 @@ namespace Admin_APP
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
-
+            services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
 
