@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Utilties.Constant;
 using ViewModels.System.User;
 
 namespace Admin_APP.Controllers
@@ -66,7 +67,8 @@ namespace Admin_APP.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-            HttpContext.Session.SetString("Token", result.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,

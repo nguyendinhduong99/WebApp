@@ -1,5 +1,6 @@
 ﻿using Application.Catalog.Products;
 using Application.Common;
+using Application.System.Languages;
 using Application.System.Role;
 using Application.System.User;
 using Data.EF;
@@ -53,6 +54,7 @@ namespace Backend_API
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ILanguageService, LanguageService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
