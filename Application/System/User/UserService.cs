@@ -38,7 +38,7 @@ namespace Application.System.User
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return new ApiErrorResult<string>("Không tìm thấy tài khoản");
+            if (user == null) return null;
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
@@ -135,8 +135,6 @@ namespace Application.System.User
 
         #endregion LẤY DANH SÁCH USER
 
-        #region Update
-
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
@@ -158,10 +156,6 @@ namespace Application.System.User
                 return new ApiErrorResult<bool>("Cập nhật không thành công");
         }
 
-        #endregion Update
-
-        #region Lấy id để update, xóa,..
-
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -182,10 +176,6 @@ namespace Application.System.User
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
 
-        #endregion Lấy id để update, xóa,..
-
-        #region Xóa Tk
-
         public async Task<ApiResult<bool>> Delete(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -199,7 +189,5 @@ namespace Application.System.User
                 return new ApiSuccessResult<bool>();
             return new ApiErrorResult<bool>("Xóa thất bại!");
         }
-
-        #endregion Xóa Tk
     }
 }

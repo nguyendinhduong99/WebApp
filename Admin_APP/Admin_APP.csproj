@@ -5,6 +5,23 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="Views\Home\Index.cshtml" />
+	  <None Include="Views\Home\Privacy.cshtml" />
+	  <None Include="Views\Login\Index.cshtml" />
+	  <None Include="Views\Shared\Components\Pager\Default.cshtml" />
+	  <None Include="Views\Shared\Error.cshtml" />
+	  <None Include="Views\Shared\_Layout.cshtml" />
+	  <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+	  <None Include="Views\Users\Create.cshtml" />
+	  <None Include="Views\Users\Delete.cshtml" />
+	  <None Include="Views\Users\Details.cshtml" />
+	  <None Include="Views\Users\Edit.cshtml" />
+	  <None Include="Views\Users\Index.cshtml" />
+	  <None Include="Views\_ViewImports.cshtml" />
+	  <None Include="Views\_ViewStart.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
