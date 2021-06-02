@@ -1,4 +1,5 @@
-﻿using Admin_APP.Services.Role;
+﻿using Admin_APP.Services.Language;
+using Admin_APP.Services.Role;
 using Admin_APP.Services.User;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -49,6 +50,8 @@ namespace Admin_APP
 
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
 
