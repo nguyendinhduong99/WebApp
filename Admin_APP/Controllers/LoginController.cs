@@ -1,4 +1,4 @@
-﻿using Admin_APP.Services;
+﻿using Admin_APP.Services.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -60,11 +60,6 @@ namespace Admin_APP.Controllers
                 return View(ModelState);
             }
             var result = await _userApiClient.Authenticate(request);
-            if (result.ResultObj == null)
-            {
-                ModelState.AddModelError("", result.Message);
-                return View();
-            }
             var userPricipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
