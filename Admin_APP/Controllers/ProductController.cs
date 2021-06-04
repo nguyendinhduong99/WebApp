@@ -22,7 +22,7 @@ namespace Admin_APP.Controllers
 
         #region Thông tin
 
-        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 3)
+        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 10)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var request = new GetManageProductPagingRequest()
@@ -42,5 +42,32 @@ namespace Admin_APP.Controllers
         }
 
         #endregion Thông tin
+
+        #region them
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] CreateProduct_DTO request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+            var result = await _productApiClient.CreateProduct(request);
+            if (result)
+            {
+                TempData["thongbao"] = "Thêm Product OK";
+                return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            }
+
+            ModelState.AddModelError("", "Thêm thất bại");
+            return View(request);
+        }
+
+        #endregion them
     }
 }

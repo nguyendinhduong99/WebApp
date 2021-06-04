@@ -64,6 +64,7 @@ namespace Backend_API.Controllers
         //Create_Product
         // http://localhost:port/product
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create_Product([FromForm] CreateProduct_DTO request)
         {
             if (!ModelState.IsValid)
