@@ -1,4 +1,5 @@
 ﻿using Admin_APP.Services.Language;
+using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
 using Admin_APP.Services.User;
 using FluentValidation.AspNetCore;
@@ -51,6 +52,7 @@ namespace Admin_APP
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
 
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();

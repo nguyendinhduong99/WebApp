@@ -45,6 +45,7 @@ namespace Application.Catalog.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
                         join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
                         join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        where pt.LanguageId == request.LanguageId
                         select new { p, pt, p_i_c };
 
             //2. filter
@@ -52,7 +53,7 @@ namespace Application.Catalog.Products
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            if (request.CategoryIds.Count > 0)
+            if (request.CategoryIds != null && request.CategoryIds.Count > 0)
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.p_i_c.CategoryId));
             }
