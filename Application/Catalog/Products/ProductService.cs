@@ -43,20 +43,21 @@ namespace Application.Catalog.Products
             //1. select + join, using LinQ
             var query = from p in _context.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
-                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
-                        join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        //join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
+                        //join c in _context.Category on p_i_c.CategoryId equals c.Id
                         where pt.LanguageId == request.LanguageId
-                        select new { p, pt, p_i_c };
+                        //select new { p, pt, p_i_c };
+                        select new { p, pt };
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            if (request.CategoryIds != null && request.CategoryIds.Count > 0)
-            {
-                query = query.Where(p => request.CategoryIds.Contains(p.p_i_c.CategoryId));
-            }
+            //if (request.CategoryIds != null && request.CategoryIds.Count > 0)
+            //{
+            //    query = query.Where(p => request.CategoryIds.Contains(p.p_i_c.CategoryId));
+            //}
 
             //3. Paging = phân trang
             //phải có totalRow, using frameworkcore
@@ -161,6 +162,24 @@ namespace Application.Catalog.Products
                     }
                 }
             };
+
+            //save image
+            if (request.ThumbnailImage != null)
+            {
+                product.ProductImages = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Caption="Thumbnail Image",
+                        DateCreated=DateTime.Now,
+                        FileSize=request.ThumbnailImage.Length,
+                        ImagePath=await this.SaveFile(request.ThumbnailImage),
+                        IsDefault=true,
+                        SortOrder=1
+                    }
+                };
+            }
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync(); //khi save ở db xong thì nó nhả cái thresh phục vụ request khác,chạy backgroud ĐỂ giảm thời gian chờ,
             return product.Id;
