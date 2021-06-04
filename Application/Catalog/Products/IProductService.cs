@@ -22,6 +22,7 @@ namespace Application.Catalog.Products
 
         Task Add_ViewCount(int productId);
 
+        //chủ
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request); //truyền vô 1 request, lấy có chọn lọc, trong ProductViewModel chỉ cung cấp thông số
 
         Task<int> Add_Image(int productId, ProductImageCreateRequest request);
