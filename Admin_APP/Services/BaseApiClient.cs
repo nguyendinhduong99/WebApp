@@ -17,7 +17,7 @@ namespace Admin_APP.Services
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        protected BaseApiClient(IHttpClientFactory httpClientFactory,
+        public BaseApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
         {
@@ -26,12 +26,10 @@ namespace Admin_APP.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        protected async Task<TResponse> GetAsync<TResponse>(string url)
+        public async Task<TResponse> GetAsync<TResponse>(string url)
         {
-            var sessions = _httpContextAccessor
-                .HttpContext
-                .Session
-                .GetString(SystemConstants.AppSettings.Token);
+            var sessions = _httpContextAccessor.HttpContext.Session
+                               .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.DiaChiMacDinh]);

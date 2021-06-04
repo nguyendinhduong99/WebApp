@@ -21,12 +21,20 @@ namespace Backend_API.Controllers
 
         #region phân trang
 
-        //get all by categoryId
-        // http://localhost:port/product? pageIndex= , pageSize= , categoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string langugeId, [FromQuery] GetPublicProductPagingRequest request)//lay du lieu, tham so tu cau query ra
+        //cho thằng khách
+
+        //[HttpGet("{languageId}/khach")]
+        //public async Task<IActionResult> GetAllPaging(string langugeId, [FromQuery] GetPublicProductPagingRequest request)//lay du lieu, tham so tu cau query ra
+        //{
+        //    var product = await _productService.GetAllByCategoryId(langugeId, request);
+        //    return Ok(product);
+        //}
+
+        //cho thằng chủ
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)//lay du lieu, tham so tu cau query ra
         {
-            var product = await _productService.GetAllByCategoryId(langugeId, request);
+            var product = await _productService.GetAllPaging(request);
             return Ok(product);
         }
 
