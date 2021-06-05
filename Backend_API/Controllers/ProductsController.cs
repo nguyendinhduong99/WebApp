@@ -133,7 +133,7 @@ namespace Backend_API.Controllers
         #region image
 
         //image
-        [HttpGet("Lấy id ảnh")]
+        [HttpGet("{productId}/images/{imageId}")]
         public async Task<IActionResult> GetImageById(int imageId)
         {
             var image = await _productService.GetImageById(imageId);
@@ -141,7 +141,7 @@ namespace Backend_API.Controllers
             return Ok(image);//200
         }
 
-        [HttpPost("{Thêm ảnh Sp}")]
+        [HttpPost("{productId}/images")]
         public async Task<IActionResult> AddImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -157,7 +157,7 @@ namespace Backend_API.Controllers
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
 
-        [HttpDelete("{imageId}")]
+        [HttpDelete("{productId}/images/{imageId}")]
         public async Task<IActionResult> DeleteImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -169,7 +169,7 @@ namespace Backend_API.Controllers
             return Ok(); //trả về 200:ok
         }
 
-        [HttpPut("{imageId}")]
+        [HttpPut("{productId}/images/{imageId}")]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)

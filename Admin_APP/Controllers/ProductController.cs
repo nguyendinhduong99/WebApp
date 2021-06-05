@@ -22,7 +22,7 @@ namespace Admin_APP.Controllers
 
         #region Thông tin
 
-        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var request = new GetManageProductPagingRequest()
@@ -58,7 +58,7 @@ namespace Admin_APP.Controllers
             if (!ModelState.IsValid)
                 return View(request);
             var result = await _productApiClient.CreateProduct(request);
-            if (result)
+            if (result == false)//nỏ biết
             {
                 TempData["thongbao"] = "Thêm Product OK";
                 return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
