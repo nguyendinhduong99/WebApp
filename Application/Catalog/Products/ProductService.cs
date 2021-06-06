@@ -43,21 +43,20 @@ namespace Application.Catalog.Products
             //1. select + join, using LinQ
             var query = from p in _context.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
-                        //join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
-                        //join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
+                        join c in _context.Category on p_i_c.CategoryId equals c.Id
                         where pt.LanguageId == request.LanguageId
-                        //select new { p, pt, p_i_c };
-                        select new { p, pt };
+                        select new { p, pt, p_i_c };
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            //if (request.CategoryIds != null && request.CategoryIds.Count > 0)
-            //{
-            //    query = query.Where(p => request.CategoryIds.Contains(p.p_i_c.CategoryId));
-            //}
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(p => p.p_i_c.CategoryId == request.CategoryId);
+            }
 
             //3. Paging = phân trang
             //phải có totalRow, using frameworkcore

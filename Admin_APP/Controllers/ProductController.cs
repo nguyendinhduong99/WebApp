@@ -1,8 +1,11 @@
-﻿using Admin_APP.Services.Product;
+﻿using Admin_APP.Services.Categories;
+using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using Utilties.Constant;
 using ViewModels.Catalog.Products;
@@ -13,16 +16,20 @@ namespace Admin_APP.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
+        private readonly ICategoriesApiClient _categoriesApiClient;
 
-        public ProductController(IProductApiClient productApiClient, IConfiguration configuration, IRoleApiClient roleApiClient)
+        public ProductController(IProductApiClient productApiClient,
+            IConfiguration configuration,
+            ICategoriesApiClient categoriesApiClient)
         {
             _productApiClient = productApiClient;
             _configuration = configuration;
+            _categoriesApiClient = categoriesApiClient;
         }
 
         #region Thông tin
 
-        public async Task<IActionResult> Index(string Keyword, int pageIndex = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(string Keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var request = new GetManageProductPagingRequest()
@@ -30,10 +37,20 @@ namespace Admin_APP.Controllers
                 Keyword = Keyword,
                 pageIndex = pageIndex,
                 pageSize = pageSize,
-                LanguageId = languageId
+                LanguageId = languageId,
+                CategoryId = categoryId
             };
             var data = await _productApiClient.GetPaging(request);
             ViewBag.Keyword = Keyword;
+
+            var categories = await _categoriesApiClient.GetAll(languageId);
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.Id
+            });
+
             if (TempData["thongbao"] != null)
             {
                 ViewBag.SuccessMsg = TempData["thongbao"];
