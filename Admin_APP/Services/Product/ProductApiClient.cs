@@ -76,7 +76,8 @@ namespace Admin_APP.Services.Product
             var data = await GetAsync<PagedResult<ProductViewModel>>(
                $"/api/products/paging?pageIndex={request.pageIndex}" +
                $"&pageSize={request.pageSize}" +
-               $"&keyword={request.Keyword}&languageId={request.LanguageId}");
+               $"&keyword={request.Keyword}&languageId={request.LanguageId}" +
+               $"&categoryId={request.CategoryId}");
             return data;
         }
 

@@ -2,7 +2,7 @@
 @model PagedResult<ViewModels.Catalog.Products.ProductViewModel>
 
 @{ ViewData["Title"] = "Danh Sách Sản Phẩm";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 @section Scripts{
     <script>
@@ -20,16 +20,22 @@
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-4 col-xs-12">
                     <a class="btn btn-success" asp-action="Create" asp-controller="Product">Tạo mới</a>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-8 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-5">
+                                <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option> --Chọn loại sản phẩm-- </option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
                             </div>
-                            <div class="cold-md-3">
+
+                            <div class="cold-md-9">
                                 <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
                                 <button type="button" onclick="window.location.href='/Product/Index'" class="btn btn-dark">Reset</button>
                             </div>

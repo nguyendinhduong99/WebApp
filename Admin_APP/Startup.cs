@@ -1,4 +1,5 @@
-﻿using Admin_APP.Services.Language;
+﻿using Admin_APP.Services.Categories;
+using Admin_APP.Services.Language;
 using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
 using Admin_APP.Services.User;
@@ -53,6 +54,7 @@ namespace Admin_APP
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
 
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
