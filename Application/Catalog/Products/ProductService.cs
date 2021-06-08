@@ -43,8 +43,10 @@ namespace Application.Catalog.Products
             //1. select + join, using LinQ
             var query = from p in _context.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
-                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId
-                        join c in _context.Category on p_i_c.CategoryId equals c.Id
+                        join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId into ppic
+                        from p_i_c in ppic.DefaultIfEmpty()
+                        join c in _context.Category on p_i_c.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId
                         select new { p, pt, p_i_c };
 
@@ -100,6 +102,11 @@ namespace Application.Catalog.Products
         {
             var product = await _context.Products.FindAsync(productId);
             var productTranslation = await _context.Product_TransLations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var categories = await (from c in _context.Category
+                                    join ct in _context.Category_Translations on c.Id equals ct.CategoryId
+                                    join p_i_c in _context.Product_in_Category on c.Id equals p_i_c.CategoryId
+                                    where p_i_c.ProductId == productId && ct.LanguageId == languageId
+                                    select ct.Name).ToListAsync();
             var productViewModel = new ProductViewModel()
             {
                 //product
@@ -125,7 +132,8 @@ namespace Application.Catalog.Products
                 SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
-                LanguageId = productTranslation.LanguageId
+                LanguageId = productTranslation.LanguageId,
+                Categories = categories
             };
             return productViewModel;
         }
@@ -350,7 +358,7 @@ namespace Application.Catalog.Products
 
         #endregion Image
 
-        #region Category
+        #region Category lay id
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
         {
@@ -403,6 +411,39 @@ namespace Application.Catalog.Products
             return pagedResult;
         }
 
-        #endregion Category
+        #endregion Category lay id
+
+        #region phan quyen san pham
+
+        public async Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request)
+        {
+            var user = await _context.Products.FindAsync(Id);
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>($"Không tìm thấy sản phẩm với mã = {Id}");
+            }
+            foreach (var category in request.Categories)
+            {
+                var product_in_Category = await _context.Product_in_Category
+                    .FirstOrDefaultAsync(d => d.CategoryId == int.Parse(category.Id)
+                    && d.ProductId == Id);
+                if (product_in_Category != null && category.Selected == false)
+                {
+                    _context.Product_in_Category.Remove(product_in_Category);
+                }
+                else if (product_in_Category == null && category.Selected)
+                {
+                    await _context.Product_in_Category.AddAsync(new ProductInCategory()
+                    {
+                        CategoryId = int.Parse(category.Id),
+                        ProductId = Id
+                    });
+                }
+            }
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
+        }
+
+        #endregion phan quyen san pham
     }
 }

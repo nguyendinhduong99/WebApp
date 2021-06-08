@@ -36,5 +36,8 @@ namespace Application.Catalog.Products
         Task<List<ProductImageViewModel>> GetListImages(int productId);
 
         Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+
+        //phan quyen san pham
+        Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request);
     }
 }

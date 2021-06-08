@@ -49,9 +49,9 @@
             <div class="row">
                 @if (ViewBag.SuccessMsg != null)
                 {
-    <div id="msgAlert" class="alert alert-success" role="alert">
-        @ViewBag.SuccessMsg
-    </div>}
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>}
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -78,29 +78,30 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OriginalPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-}
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OriginalPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stock)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) /
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) /
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id })  /
+                                    @Html.ActionLink("Phân Loại Sản Phẩm", "CategoryAssign", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

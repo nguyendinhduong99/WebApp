@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Utilties.Constant;
 using ViewModels.Catalog.Products;
 using ViewModels.Common;
+using ViewModels.System.User;
 
 namespace Admin_APP.Services.Product
 {
@@ -82,5 +85,34 @@ namespace Admin_APP.Services.Product
         }
 
         #endregion GET LIST PRODUCT
+
+        #region Phan quyen
+
+        public async Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/products/{Id}/categories", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
+
+        public async Task<ProductViewModel> GetById(int Id, string languageId)
+        {
+            var data = await GetAsync<ProductViewModel>($"/api/products/{Id}/{languageId}");//post ra 1 cái link
+            return data;
+        }
+
+        #endregion Phan quyen
     }
 }

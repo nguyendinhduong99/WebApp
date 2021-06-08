@@ -12,5 +12,6 @@ namespace Admin_APP.Services.Role
         Task<ApiResult<List<RoleViewModel>>> GetAll();
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+        
     }
 }
