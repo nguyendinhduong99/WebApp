@@ -3,6 +3,7 @@ using Admin_APP.Services.Language;
 using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
 using Admin_APP.Services.User;
+using API_Integration.Services.Categories;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +55,7 @@ namespace Admin_APP
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
-            services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
 
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
