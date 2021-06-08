@@ -78,7 +78,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "abef735f-85bf-4c59-91a9-b14fccc2ecfd",
+                            ConcurrencyStamp = "a025fb32-089e-47af-a5d5-e4487460435d",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -155,7 +155,7 @@ namespace Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ee8e13c-5b98-45a6-8c33-ad60ba8c3622",
+                            ConcurrencyStamp = "3b761c47-56b3-4d3f-82dc-dc68e06a963e",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "duongrbt@gmail.com",
                             EmailConfirmed = true,
@@ -164,7 +164,7 @@ namespace Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "duongrbt@gmail.com",
                             NormalizedUserName = "d",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBm4h+sRpMUxEaasdf7rbdPhEZY81z8b+04iBB0Axz3jWayEIVtEjMIAn1TU1f8bvQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH2apD2b11Q5Iw2AMYxOjEJAZnQJ37BD1EX2G+TtnKOD+2RTUWpYHP4QUPj7S8IyJQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -292,7 +292,7 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nam",
                             SeoAlias = "ao-nam",
                             SeoDescription = "Sản phẩm áo thời trang nam",
@@ -302,7 +302,7 @@ namespace Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Men Shirt",
                             SeoAlias = "men-shirt",
                             SeoDescription = "The shirt products for men",
@@ -312,7 +312,7 @@ namespace Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nữ",
                             SeoAlias = "ao-nu",
                             SeoDescription = "Sản phẩm áo thời trang nữ",
@@ -322,7 +322,7 @@ namespace Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Women Shirt",
                             SeoAlias = "women-shirt",
                             SeoDescription = "The shirt products for women",
@@ -388,13 +388,13 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "vi-VN",
+                            Id = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            Id = "en-US",
+                            Id = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -412,7 +412,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 5, 24, 1, 31, 11, 377, DateTimeKind.Local).AddTicks(6933));
+                        .HasDefaultValue(new DateTime(2021, 6, 8, 15, 44, 25, 741, DateTimeKind.Local).AddTicks(3978));
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -564,7 +564,7 @@ namespace Data.Migrations
                             Id = 1,
                             Description = "Áo sơ mi nam trắng Việt Tiến",
                             Details = "Áo sơ mi nam trắng Việt Tiến",
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo sơ mi nam trắng Việt Tiến",
                             ProductId = 1,
                             SeoAlias = "ao-so-mi-nam-trang-viet-tien",
@@ -576,7 +576,7 @@ namespace Data.Migrations
                             Id = 2,
                             Description = "Viet Tien Men T-Shirt",
                             Details = "Viet Tien Men T-Shirt",
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Viet Tien Men T-Shirt",
                             ProductId = 1,
                             SeoAlias = "viet-tien-men-t-shirt",
@@ -663,7 +663,7 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 5, 24, 1, 31, 11, 401, DateTimeKind.Local).AddTicks(4830),
+                            DateCreated = new DateTime(2021, 6, 8, 15, 44, 25, 764, DateTimeKind.Local).AddTicks(7652),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
