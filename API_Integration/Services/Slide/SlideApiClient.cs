@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Admin_APP.Services;
+using Admin_APP.Services.Categories;
+using Admin_APP.Services.Slide;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ViewModels.Catalog.Categories;
+using ViewModels.Utilities.Slide;
 
-namespace Admin_APP.Services.Categories
+namespace API_Integration.Services.Slide
 {
-    public class CategoriesApiClient : BaseApiClient, ICategoriesApiClient
+    public class SlideApiClient : BaseApiClient, ISlideApiClient
     {
-        public CategoriesApiClient(
+        public SlideApiClient(
             IHttpClientFactory httpClientFactory,
             IHttpContextAccessor httpContextAccessor,
             IConfiguration configuration)
@@ -19,9 +22,9 @@ namespace Admin_APP.Services.Categories
         {
         }
 
-        public async Task<List<CategoryViewModel>> GetAll(string languageId)
+        public async Task<List<SlideViewModel>> GetAll()
         {
-            return await GetListAsync<CategoryViewModel>("/api/categories?languageId=" + languageId);
+            return await GetListAsync<SlideViewModel>("/api/slides");
         }
     }
 }

@@ -30,6 +30,8 @@ namespace Data.EF
         public DbSet<ProductTranslation> Product_TransLations { get; set; }
         public DbSet<ProductInCategory> Product_in_Category { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Slide> Slides { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configure using Fluent API
@@ -53,6 +55,8 @@ namespace Data.EF
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
 
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SlideConfiguration());
             //config ngay trong này, chỉ tạo bảngs
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -67,10 +71,9 @@ namespace Data.EF
 
             //base.OnModelCreating(modelBuilder);
         }
+
         public DB_Context(DbContextOptions options) : base(options)
         {
-
         }
-
     }
 }

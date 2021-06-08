@@ -31,6 +31,7 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\API_Integration\API_Integration.csproj" />
 		<ProjectReference Include="..\Utilties\Utilties.csproj" />
 		<ProjectReference Include="..\ViewModels\ViewModels.csproj" />
 	</ItemGroup>

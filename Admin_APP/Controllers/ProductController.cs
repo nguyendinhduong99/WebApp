@@ -17,11 +17,11 @@ namespace Admin_APP.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
-        private readonly ICategoriesApiClient _categoryApiClient;
+        private readonly ISlideApiClient _categoryApiClient;
 
         public ProductController(IProductApiClient productApiClient,
             IConfiguration configuration,
-            ICategoriesApiClient categoryApiClient)
+            ISlideApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
             _configuration = configuration;

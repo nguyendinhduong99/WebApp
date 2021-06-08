@@ -24,5 +24,6 @@ namespace LongViet_Data.Entities
         public List<ProductTranslation> ProductTranslations { get; set; }
 
         public List<ProductImage> ProductImages { get; set; }
+        public bool? IsFeatured { get; set; }
     }
 }
