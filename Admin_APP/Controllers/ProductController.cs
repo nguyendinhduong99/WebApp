@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Utilties.Constant;
 using ViewModels.Catalog.Products;
+using ViewModels.Common;
 
 namespace Admin_APP.Controllers
 {
@@ -16,15 +17,15 @@ namespace Admin_APP.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
-        private readonly ICategoriesApiClient _categoriesApiClient;
+        private readonly ICategoriesApiClient _categoryApiClient;
 
         public ProductController(IProductApiClient productApiClient,
             IConfiguration configuration,
-            ICategoriesApiClient categoriesApiClient)
+            ICategoriesApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
             _configuration = configuration;
-            _categoriesApiClient = categoriesApiClient;
+            _categoryApiClient = categoryApiClient;
         }
 
         #region Thông tin
@@ -43,7 +44,7 @@ namespace Admin_APP.Controllers
             var data = await _productApiClient.GetPaging(request);
             ViewBag.Keyword = Keyword;
 
-            var categories = await _categoriesApiClient.GetAll(languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
             ViewBag.Categories = categories.Select(x => new SelectListItem()
             {
                 Text = x.Name,
@@ -86,5 +87,54 @@ namespace Admin_APP.Controllers
         }
 
         #endregion them
+
+        #region Phân quyền sản phẩm
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int Id)
+        {
+            var roleAssignRequest = await GetCategoryAssignRequest(Id);
+            return View(roleAssignRequest);
+        }
+
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int Id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+            var productObj = await _productApiClient.GetById(Id, languageId);//lay danh sach san pham
+            var categories = await _categoryApiClient.GetAll(languageId); //lay danh sach the loai
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var role in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = productObj.Categories.Contains(role.Name)
+                });
+            }
+            return categoryAssignRequest;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                TempData["thongbao"] = "Cập nhật quyền thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
+
+            return View(roleAssignRequest);
+        }
+
+        #endregion Phân quyền sản phẩm
     }
 }

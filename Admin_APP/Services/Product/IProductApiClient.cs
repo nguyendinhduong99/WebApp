@@ -12,5 +12,9 @@ namespace Admin_APP.Services.Product
         Task<PagedResult<ProductViewModel>> GetPaging(GetManageProductPagingRequest request);
 
         Task<bool> CreateProduct(CreateProduct_DTO request);
+
+        Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request);
+
+        Task<ProductViewModel> GetById(int Id, string languageId);
     }
 }
