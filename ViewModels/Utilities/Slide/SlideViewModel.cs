@@ -13,6 +13,6 @@ namespace ViewModels.Utilities.Slide
         public string Url { get; set; }
         public string Image { get; set; }
         public int SortOrder { get; set; }
-        public Status Status { get; set; }
+        // public Status Status { get; set; }
     }
 }

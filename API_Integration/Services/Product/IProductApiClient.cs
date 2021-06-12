@@ -13,8 +13,14 @@ namespace Admin_APP.Services.Product
 
         Task<bool> CreateProduct(CreateProduct_DTO request);
 
+        Task<bool> UpdateProduct(UpdateProduct_DTO request);
+
         Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request);
 
         Task<ProductViewModel> GetById(int Id, string languageId);
+
+        Task<List<ProductViewModel>> GetFeatureProducts(string languageId, int take);
+
+        Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
     }
 }

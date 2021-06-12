@@ -39,5 +39,11 @@ namespace Application.Catalog.Products
 
         //phan quyen san pham
         Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request);
+
+        //sản phẩm nổi bật
+        Task<List<ProductViewModel>> GetFeatureProducts(string languageId, int take);
+
+        //sản phẩm mới nhất
+        Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
     }
 }

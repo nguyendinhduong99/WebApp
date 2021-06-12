@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Utilties.Constant;
 using ViewModels.Catalog.ProductImages;
 using ViewModels.Catalog.Products;
 using ViewModels.Common;
@@ -45,8 +46,10 @@ namespace Application.Catalog.Products
                         join pt in _context.Product_TransLations on p.Id equals pt.ProductId
                         join p_i_c in _context.Product_in_Category on p.Id equals p_i_c.ProductId into ppic
                         from p_i_c in ppic.DefaultIfEmpty()
+
                         join c in _context.Category on p_i_c.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
+
                         where pt.LanguageId == request.LanguageId
                         select new { p, pt, p_i_c };
 
@@ -74,7 +77,7 @@ namespace Application.Catalog.Products
                 DateCreated = x.p.DateCreated,
 
                 //bảng product translate
-                Name = x.pt.Name,
+                Name = x.pt.Name,//N/A: not availble
                 Description = x.pt.Description,
                 Details = x.pt.Details,
                 LanguageId = x.pt.LanguageId,
@@ -147,59 +150,77 @@ namespace Application.Catalog.Products
 
         public async Task<int> Create_Product(CreateProduct_DTO request)
         {
+            var languages = _context.Languages;
+            var translations = new List<ProductTranslation>();
+            foreach (var language in languages)
+            {
+                if (language.Id == request.LanguageId)
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = request.Name,
+                        Description = request.Description,
+                        Details = request.Details,
+                        SeoDescription = request.SeoDescription,
+                        SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
+                        LanguageId = request.LanguageId
+                    });
+                }
+                else
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        Description = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
             var product = new Product()
             {
                 Price = request.Price,
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
-                DateCreated = DateTime.Today,
-
-                ProductTranslations = new List<ProductTranslation>()//cha
-                {
-                    new ProductTranslation()//con
-                    {
-                        Name = request.Name,
-                        Description = request.Description,
-                        Details = request.Details,
-                        SeoDescription = request.SeoDescription,
-                        SeoTitle = request.SeoTitle,
-                        SeoAlias = request.SeoAlias,
-                        LanguageId = request.LanguageId
-                    }
-                }
+                DateCreated = DateTime.Now,
+                ProductTranslations = translations
             };
-
-            //save image
+            //Save image
             if (request.ThumbnailImage != null)
             {
                 product.ProductImages = new List<ProductImage>()
                 {
                     new ProductImage()
                     {
-                        Caption="Thumbnail Image",
-                        DateCreated=DateTime.Now,
-                        FileSize=request.ThumbnailImage.Length,
-                        ImagePath=await this.SaveFile(request.ThumbnailImage),
-                        IsDefault=true,
-                        SortOrder=1
+                        Caption = "Thumbnail image",
+                        DateCreated = DateTime.Now,
+                        FileSize = request.ThumbnailImage.Length,
+                        ImagePath = await this.SaveFile(request.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1
                     }
                 };
             }
-
             _context.Products.Add(product);
-            await _context.SaveChangesAsync(); //khi save ở db xong thì nó nhả cái thresh phục vụ request khác,chạy backgroud ĐỂ giảm thời gian chờ,
+            await _context.SaveChangesAsync();
             return product.Id;
         }
 
         public async Task<int> Delete_Product(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null)
+            if (product == null) throw new Exception($"Cannot find a product: {productId}");
+
+            var images = _context.ProductImages.Where(i => i.ProductId == productId);
+            foreach (var image in images)
             {
-                throw new Exception($"Can't not find product :{productId}");
+                await _storageService.DeleteFileAsync(image.ImagePath);
             }
+
             _context.Products.Remove(product);
+
             return await _context.SaveChangesAsync();
         }
 
@@ -225,7 +246,7 @@ namespace Application.Catalog.Products
                 if (thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
-                    thumbnailImage.ImagePath = await SaveFile(request.ThumbnailImage);
+                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
@@ -445,5 +466,94 @@ namespace Application.Catalog.Products
         }
 
         #endregion phan quyen san pham
+
+        #region sản phẩm nổi bật
+
+        public async Task<List<ProductViewModel>> GetFeatureProducts(string languageId, int take)
+        {
+            //1. select + join, using LinQ
+            var query = from p in _context.Products
+                        join pt in _context.Product_TransLations on p.Id equals pt.ProductId
+                        join pic in _context.Product_in_Category on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        join c in _context.Category on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
+                        && p.IsFeatured == true
+                        select new { p, pt, pic, pi };
+
+            //3. Paging = phân trang
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
+                .Select(x => new ProductViewModel()
+                {
+                    //bảng product
+                    Id = x.p.Id,
+                    Price = x.p.Price,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    DateCreated = x.p.DateCreated,
+
+                    //bảng product translate
+                    Name = x.pt.Name,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    ThumbnailImage = x.pi.ImagePath
+                }).ToListAsync();
+
+            return data;
+        }
+
+        #endregion sản phẩm nổi bật
+
+        #region Sp Mới nhất
+
+        public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
+        {
+            //1. select + join, using LinQ
+            var query = from p in _context.Products
+                        join pt in _context.Product_TransLations on p.Id equals pt.ProductId
+                        join pic in _context.Product_in_Category on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        join c in _context.Category on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
+                        select new { p, pt, pic, pi };
+            //3. Paging = phân trang
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take).Select(x => new ProductViewModel()
+            {
+                //bảng product
+                Id = x.p.Id,
+                Price = x.p.Price,
+                OriginalPrice = x.p.OriginalPrice,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount,
+                DateCreated = x.p.DateCreated,
+
+                //bảng product translate
+                Name = x.pt.Name,
+                Description = x.pt.Description,
+                Details = x.pt.Details,
+                LanguageId = x.pt.LanguageId,
+                SeoAlias = x.pt.SeoAlias,
+                SeoDescription = x.pt.SeoDescription,
+                SeoTitle = x.pt.SeoTitle,
+                ThumbnailImage = x.pi.ImagePath
+            }).ToListAsync();
+
+            return data;
+        }
+
+        #endregion Sp Mới nhất
     }
 }

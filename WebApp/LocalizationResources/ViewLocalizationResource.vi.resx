@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add to" xml:space="preserve">
+    <value>Thêm vào</value>
+    <comment>/Home/Index</comment>
+  </data>
+  <data name="categoryUrl" xml:space="preserve">
+    <value>danh-muc</value>
+    <comment>Layouts</comment>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên hệ</value>
     <comment>Layouts</comment>
@@ -141,6 +149,10 @@
     <value>Đăng nhập</value>
     <comment>Layouts</comment>
   </data>
+  <data name="productUrl" xml:space="preserve">
+    <value>san-pham</value>
+    <comment>Layouts</comment>
+  </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Khuyến mãi</value>
     <comment>Layouts</comment>
@@ -148,5 +160,9 @@
   <data name="Vietnamese" xml:space="preserve">
     <value>Tiếng Việt</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="VIEW" xml:space="preserve">
+    <value>LƯỢT XEM</value>
+    <comment>/Home/Index</comment>
   </data>
 </root>

@@ -24,10 +24,11 @@ namespace Application.System.Languages
 
         public async Task<ApiResult<List<LanguagesViewModel>>> GetAll()
         {
-            var languages = await _dB_Context.Languges.Select(d => new LanguagesViewModel()
+            var languages = await _dB_Context.Languages.Select(d => new LanguagesViewModel()
             {
                 Id = d.Id,
-                Name = d.Name
+                Name = d.Name,
+                IsDefault = d.IsDefault
             }).ToListAsync();
             return new ApiSuccessResult<List<LanguagesViewModel>>(languages);
         }

@@ -4,6 +4,7 @@ using Application.Common;
 using Application.System.Languages;
 using Application.System.Role;
 using Application.System.User;
+using Application.Utilities.Slides;
 using Data.EF;
 using Data.Entities;
 using FluentValidation;
@@ -57,6 +58,7 @@ namespace Backend_API
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ISlideService, SlideService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
@@ -145,8 +147,10 @@ namespace Backend_API
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseRouting();
+
             app.UseAuthorization();
 
             app.UseSwagger();
