@@ -10,13 +10,11 @@ namespace Admin_APP.Services.Language
 {
     public class LanguageApiClient : BaseApiClient, ILanguageApiClient
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public LanguageApiClient(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor,
-                    IConfiguration configuration) :
-            base(httpClientFactory, httpContextAccessor, configuration)
+        public LanguageApiClient
+            (IHttpClientFactory httpClientFactory,
+            IHttpContextAccessor httpContextAccessor,
+                IConfiguration configuration)
+            : base(httpClientFactory, httpContextAccessor, configuration)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using Admin_APP.Services.Categories;
 using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,11 +18,11 @@ namespace Admin_APP.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
-        private readonly ISlideApiClient _categoryApiClient;
+        private readonly ICategoriesApiClient _categoryApiClient;
 
         public ProductController(IProductApiClient productApiClient,
             IConfiguration configuration,
-            ISlideApiClient categoryApiClient)
+            ICategoriesApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
             _configuration = configuration;
@@ -136,5 +137,42 @@ namespace Admin_APP.Controllers
         }
 
         #endregion Phân quyền sản phẩm
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var product = await _productApiClient.GetById(id, languageId);
+            var editVm = new UpdateProduct_DTO()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Details = product.Details,
+                Name = product.Name,
+                SeoAlias = product.SeoAlias,
+                SeoDescription = product.SeoDescription,
+                SeoTitle = product.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] UpdateProduct_DTO request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
+            return View(request);
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Data.EF
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Language> Languges { get; set; }
+        public DbSet<Language> Languages { get; set; }
         public DbSet<CategoryTranslation> Category_Translations { get; set; }
         public DbSet<ProductTranslation> Product_TransLations { get; set; }
         public DbSet<ProductInCategory> Product_in_Category { get; set; }

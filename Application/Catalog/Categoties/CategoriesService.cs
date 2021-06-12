@@ -29,7 +29,8 @@ namespace Application.Catalog.Categoties
             return await query.Select(d => new CategoryViewModel()
             {
                 Id = d.c.Id,
-                Name = d.ct.Name
+                Name = d.ct.Name,
+                ParentId = d.c.ParentId
             }).ToListAsync();
         }
     }

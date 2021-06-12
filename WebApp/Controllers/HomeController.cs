@@ -1,4 +1,6 @@
-﻿using LazZiya.ExpressLocalization;
+﻿using Admin_APP.Services.Product;
+using Admin_APP.Services.Slide;
+using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilties.Constant;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -15,18 +19,29 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISharedCultureLocalizer _loc;
 
-        public HomeController(ILogger<HomeController> logger, ISharedCultureLocalizer loc)
+        private readonly ISlideApiClient _slideApiClient;
+        private readonly IProductApiClient _productApiClient;
+
+        public HomeController(ILogger<HomeController> logger, ISlideApiClient slideApiClient, IProductApiClient productApiClient)
         {
             _logger = logger;
-            _loc = loc;
+            //_loc = loc;
+            _slideApiClient = slideApiClient;
+            _productApiClient = productApiClient;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var msg = _loc.GetLocalizedString("Vietnamese");
-            return View();
+            var culture = CultureInfo.CurrentCulture.Name;
+            //var msg = _loc.GetLocalizedString("Vietnamese");
+            var viewModel = new HomeViewModel
+            {
+                Slides = await _slideApiClient.GetAll(),
+                FeaturedProduct = await _productApiClient.GetFeatureProducts(culture, SystemConstants.ProductSettings.NumberOfFeaturedProducts),
+                LatestProduct = await _productApiClient.GetLatestProducts(culture, SystemConstants.ProductSettings.NumberOfLatestProducts)
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

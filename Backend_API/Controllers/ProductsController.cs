@@ -54,6 +54,24 @@ namespace Backend_API.Controllers
             return Ok(product);//200
         }
 
+        //sản phẩm nổi bật
+        [HttpGet("featured/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeatureProducts(string languageId, int take)
+        {
+            var product = await _productService.GetFeatureProducts(languageId, take);
+            return Ok(product);//200
+        }
+
+        //sản phẩm mới nhất
+        [HttpGet("latest/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(string languageId, int take)
+        {
+            var product = await _productService.GetLatestProducts(languageId, take);
+            return Ok(product);//200
+        }
+
         //Create_Product
         // http://localhost:port/product
         [HttpPost]
@@ -65,26 +83,29 @@ namespace Backend_API.Controllers
                 return BadRequest(ModelState);
             }
             var productId = await _productService.Create_Product(request);
-            if (productId == 0) return BadRequest();//trả về 400:lỗi
-            //return Ok(result); //trả về 200:ok
+            if (productId == 0)
+                return BadRequest();
 
-            var product = _productService.GetById(productId, request.LanguageId);
-            //muốn trả về 201 thì trả về object
+            var product = await _productService.GetById(productId, request.LanguageId);
+
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
 
         //Update_Product
         // http://localhost:port/product
-        [HttpPut]
-        public async Task<IActionResult> Update_Product([FromForm] UpdateProduct_DTO request)
+        [HttpPut("{productId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update_Product([FromRoute] int productId, [FromForm] UpdateProduct_DTO request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var affected_result = await _productService.Update_Product(request);
-            if (affected_result == 0) return BadRequest();//trả về 400:lỗi
-            return Ok(); //trả về 200:ok
+            request.Id = productId;
+            var affectedResult = await _productService.Update_Product(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
         }
 
         //Delete_Product
