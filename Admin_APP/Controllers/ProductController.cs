@@ -62,7 +62,7 @@ namespace Admin_APP.Controllers
 
         #endregion Thông tin
 
-        #region them
+        #region thêm
 
         [HttpGet]
         public IActionResult Create()
@@ -87,7 +87,7 @@ namespace Admin_APP.Controllers
             return View(request);
         }
 
-        #endregion them
+        #endregion thêm
 
         #region Phân quyền sản phẩm
 

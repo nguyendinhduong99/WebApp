@@ -137,8 +137,8 @@ namespace Admin_APP.Services.Product
         public async Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.DiaChiMacDinh]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
