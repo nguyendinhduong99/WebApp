@@ -1,8 +1,10 @@
-﻿using Admin_APP.Services.Language;
+﻿using Admin_APP.Services.Categories;
+using Admin_APP.Services.Language;
 using Admin_APP.Services.Product;
 using Admin_APP.Services.Role;
 using Admin_APP.Services.Slide;
 using Admin_APP.Services.User;
+using API_Integration.Services.Categories;
 using API_Integration.Services.Slide;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,7 +28,7 @@ namespace Admin_APP
 
         public IConfiguration Configuration { get; }
 
-        // Phương thức này được gọi bởi thời gian chạy. Sử dụng phương pháp này để thêm dịch vụ vào vùng chứa.
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
@@ -51,23 +53,20 @@ namespace Admin_APP
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
-            services.AddTransient<ISlideApiClient, SlideApiClient>();
-
-            services.AddRazorPages()
-        .AddRazorRuntimeCompilation();
+            services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            //            // code omitted for brevity
-            //#if DEBUG
-            //            if (environment == Environments.Development)
-            //            {
-            //                builder.AddRazorRuntimeCompilation();
-            //            }
-            //#endif
+
+#if DEBUG
+            if (environment == Environments.Development)
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
+#endif
         }
 
-        // Phương thức này được gọi bởi thời gian chạy. Sử dụng phương pháp này để định cấu hình đường dẫn yêu cầu HTTP.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -77,7 +76,7 @@ namespace Admin_APP
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // Giá trị HSTS mặc định là 30 ngày. Bạn có thể muốn thay đổi điều này cho các kịch bản sản xuất, hãy xem https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -88,9 +87,7 @@ namespace Admin_APP
             app.UseRouting();
 
             app.UseAuthorization();
-
             app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
