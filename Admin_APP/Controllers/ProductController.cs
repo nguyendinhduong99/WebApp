@@ -62,7 +62,7 @@ namespace Admin_APP.Controllers
 
         #endregion Thông tin
 
-        #region them
+        #region thêm
 
         [HttpGet]
         public IActionResult Create()
@@ -77,7 +77,7 @@ namespace Admin_APP.Controllers
             if (!ModelState.IsValid)
                 return View(request);
             var result = await _productApiClient.CreateProduct(request);
-            if (result == false)//nỏ biết
+            if (result)//nỏ biết
             {
                 TempData["thongbao"] = "Thêm Product OK";
                 return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
@@ -87,7 +87,7 @@ namespace Admin_APP.Controllers
             return View(request);
         }
 
-        #endregion them
+        #endregion thêm
 
         #region Phân quyền sản phẩm
 
@@ -138,6 +138,8 @@ namespace Admin_APP.Controllers
 
         #endregion Phân quyền sản phẩm
 
+        #region update
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -167,12 +169,14 @@ namespace Admin_APP.Controllers
             var result = await _productApiClient.UpdateProduct(request);
             if (result)
             {
-                TempData["result"] = "Cập nhật sản phẩm thành công";
+                TempData["thongbao"] = "Cập nhật sản phẩm thành công";
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
             return View(request);
         }
+
+        #endregion update
     }
 }
