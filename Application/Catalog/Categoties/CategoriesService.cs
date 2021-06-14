@@ -33,5 +33,21 @@ namespace Application.Catalog.Categoties
                 ParentId = d.c.ParentId
             }).ToListAsync();
         }
+
+        public async Task<CategoryViewModel> GetById(string languageId, int id)
+        {
+            var query = from c in _dB_Context.Category
+                        join ct in _dB_Context.Category_Translations
+                        on c.Id equals ct.CategoryId
+                        where ct.LanguageId == languageId && c.Id == id
+                        select new { c, ct };
+
+            return await query.Select(d => new CategoryViewModel()
+            {
+                Id = d.c.Id,
+                Name = d.ct.Name,
+                ParentId = d.c.ParentId
+            }).FirstOrDefaultAsync();
+        }
     }
 }

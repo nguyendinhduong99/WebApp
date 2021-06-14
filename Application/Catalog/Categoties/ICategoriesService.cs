@@ -9,5 +9,7 @@ namespace Application.Catalog.Categoties
     public interface ICategoriesService
     {
         Task<List<CategoryViewModel>> GetAll(string languageId);
+
+        Task<CategoryViewModel> GetById(string languageId, int id);
     }
 }

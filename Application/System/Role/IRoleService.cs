@@ -11,6 +11,7 @@ namespace Application.System.Role
     {
         Task<List<RoleViewModel>> GetAll();
 
+        //cho tài khoản
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
     }
 }

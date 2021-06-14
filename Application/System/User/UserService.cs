@@ -163,6 +163,7 @@ namespace Application.System.User
             {
                 return new ApiErrorResult<UserViewModel>("User không tồn tại");
             }
+            var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserViewModel()
             {
                 Email = user.Email,
@@ -171,7 +172,8 @@ namespace Application.System.User
                 Dob = user.Dob,
                 Id = user.Id,
                 LastName = user.LastName,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Roles = roles
             };
             return new ApiSuccessResult<UserViewModel>(userVm);
         }

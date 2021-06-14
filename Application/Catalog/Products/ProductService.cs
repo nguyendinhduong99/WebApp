@@ -50,8 +50,11 @@ namespace Application.Catalog.Products
                         join c in _context.Category on p_i_c.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
 
-                        where pt.LanguageId == request.LanguageId
-                        select new { p, pt, p_i_c };
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+
+                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        select new { p, pt, p_i_c, pi };
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -83,7 +86,8 @@ namespace Application.Catalog.Products
                 LanguageId = x.pt.LanguageId,
                 SeoAlias = x.pt.SeoAlias,
                 SeoDescription = x.pt.SeoDescription,
-                SeoTitle = x.pt.SeoTitle
+                SeoTitle = x.pt.SeoTitle,
+                ThumbnailImage = x.pi.ImagePath
             }).ToListAsync();
 
             //4. select and projection = chọn và tham chiếu
