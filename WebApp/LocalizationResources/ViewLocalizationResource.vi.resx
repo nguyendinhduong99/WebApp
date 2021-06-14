@@ -119,11 +119,19 @@
   </resheader>
   <data name="Add to" xml:space="preserve">
     <value>Thêm vào</value>
-    <comment>/Home/Index</comment>
+    <comment>Common</comment>
+  </data>
+  <data name="Adds product to compair" xml:space="preserve">
+    <value>Thêm sản phẩm để so sánh</value>
+    <comment>/Product/Catrgory</comment>
   </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>danh-muc</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Compair Product" xml:space="preserve">
+    <value>So sánh sản phẩm</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên hệ</value>
@@ -141,6 +149,10 @@
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="I'm a paragraph. Click here" xml:space="preserve">
+    <value>Mô tả sản phẩm. Bấm vào đây</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Sản phẩm mới nhất</value>
     <comment>/Home/Index</comment>
@@ -149,9 +161,53 @@
     <value>Đăng nhập</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Manicure" xml:space="preserve">
+    <value>Thiết bị cắt</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Name A - Z" xml:space="preserve">
+    <value>Tên từ A-Z</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="NEW | AVAILBLE" xml:space="preserve">
+    <value>MỚI | CÓ SẴN</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country." xml:space="preserve">
+    <value>Ngày nay, ngành công nghiệp nội y là một trong những lĩnh vực kinh doanh thành công nhất, chúng tôi luôn cập nhật các xu hướng thời trang mới nhất - đó là lý do tại sao hàng hóa của chúng tôi rất được ưa chuộng và chúng tôi có một lượng lớn khách hàng trung thành trên khắp cả nước.</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Pedicure" xml:space="preserve">
+    <value>tỉa</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Price Lowest first" xml:space="preserve">
+    <value>Giá</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="Priduct name Z - A" xml:space="preserve">
+    <value>Tên Z - A</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="Priduct Stoke" xml:space="preserve">
+    <value>Số lượng tồn kho</value>
+    <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="products" xml:space="preserve">
+    <value>san-pham</value>
+    <comment>Common</comment>
+  </data>
   <data name="productUrl" xml:space="preserve">
     <value>san-pham</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sắp xếp theo</value>
+    <comment>/Product/Catrgory</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Khuyến mãi</value>

@@ -1,7 +1,7 @@
 ﻿@using ViewModels.Common
 @model PagedResult<ViewModels.System.User.UserViewModel>
 @{ ViewData["Title"] = "Danh Sách User";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 @section Scripts{
     <script>
@@ -42,9 +42,9 @@
             <div class="row">
                 @if (ViewBag.SuccessMsg != null)
                 {
-    <div id="msgAlert" class="alert alert-success" role="alert">
-        @ViewBag.SuccessMsg
-    </div>}
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>}
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -71,29 +71,30 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                    @Html.ActionLink("Cấp Quyền", "RoleAssign", new { id = item.Id })
-                </td>
-            </tr>}
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) 🤙
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) 👋
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) 👁
+                                    @Html.ActionLink("Cấp Quyền", "RoleAssign", new { id = item.Id })
+                                </td>
+                            </tr>
+}
                     </tbody>
                 </table>
             </div>

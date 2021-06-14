@@ -25,5 +25,10 @@ namespace API_Integration.Services.Categories
         {
             return await GetListAsync<CategoryViewModel>("/api/categories?languageId=" + languageId);
         }
+
+        public async Task<CategoryViewModel> GetById(string languageId, int id)
+        {
+            return await GetAsync<CategoryViewModel>($"/api/categories/{languageId}/{id}");
+        }
     }
 }

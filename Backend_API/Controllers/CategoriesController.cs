@@ -21,5 +21,12 @@ namespace Backend_API.Controllers
             var product = await _categoriesService.GetAll(languageId);
             return Ok(product);
         }
+
+        [HttpGet("{languageId}/{id}")]
+        public async Task<IActionResult> GetById(string languageId, int id)
+        {
+            var product = await _categoriesService.GetById(languageId, id);
+            return Ok(product);
+        }
     }
 }

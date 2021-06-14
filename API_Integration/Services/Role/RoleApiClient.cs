@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Utilties.Constant;
 using ViewModels.Common;
 using ViewModels.System.Role;
 
@@ -31,9 +32,9 @@ namespace Admin_APP.Services.Role
 
         public async Task<ApiResult<List<RoleViewModel>>> GetAll()
         {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.DiaChiMacDinh]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/roles");
             var body = await response.Content.ReadAsStringAsync();
@@ -52,8 +53,8 @@ namespace Admin_APP.Services.Role
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["DiaChiMacDinh"]);
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.DiaChiMacDinh]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
@@ -69,7 +70,5 @@ namespace Admin_APP.Services.Role
         }
 
         #endregion Chỉ định phân quyền cho thằng mô
-
-
     }
 }

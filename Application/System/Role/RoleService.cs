@@ -40,6 +40,7 @@ namespace Application.System.Role
             {
                 return new ApiErrorResult<bool>("Tài khoản không tồn tại");
             }
+            //biến kiểm tra role ấy có tồn tại k
             var removedRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
             foreach (var roleName in removedRoles)
             {
@@ -50,9 +51,11 @@ namespace Application.System.Role
             }
             await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
+            //nếu k có role thì có thể apply role
             var addedRoles = request.Roles.Where(x => x.Selected).Select(x => x.Name).ToList();
             foreach (var roleName in addedRoles)
             {
+                //đk user này chưa có role(false)
                 if (await _userManager.IsInRoleAsync(user, roleName) == false)
                 {
                     await _userManager.AddToRoleAsync(user, roleName);

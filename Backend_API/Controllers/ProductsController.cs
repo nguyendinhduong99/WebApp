@@ -9,7 +9,6 @@ namespace Backend_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -76,6 +75,7 @@ namespace Backend_API.Controllers
         // http://localhost:port/product
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Create_Product([FromForm] CreateProduct_DTO request)
         {
             if (!ModelState.IsValid)
@@ -95,6 +95,7 @@ namespace Backend_API.Controllers
         // http://localhost:port/product
         [HttpPut("{productId}")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Update_Product([FromRoute] int productId, [FromForm] UpdateProduct_DTO request)
         {
             if (!ModelState.IsValid)
@@ -111,6 +112,7 @@ namespace Backend_API.Controllers
         //Delete_Product
         // http://localhost:port/product
         [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<IActionResult> Delete_Product(int productId)
         {
             if (!ModelState.IsValid)
@@ -129,6 +131,7 @@ namespace Backend_API.Controllers
         //Update_Price
         // http://localhost:port/product
         [HttpPatch("{productId}/{newPrice}")]//update 1 phần thì dùng HttpPatch
+        [Authorize]
         public async Task<IActionResult> Update_Price(int productId, decimal newPrice)
         {
             if (!ModelState.IsValid)
@@ -156,6 +159,7 @@ namespace Backend_API.Controllers
         }
 
         [HttpPost("{productId}/images")]
+        [Authorize]
         public async Task<IActionResult> AddImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -172,6 +176,7 @@ namespace Backend_API.Controllers
         }
 
         [HttpDelete("{productId}/images/{imageId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -184,6 +189,7 @@ namespace Backend_API.Controllers
         }
 
         [HttpPut("{productId}/images/{imageId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -200,6 +206,7 @@ namespace Backend_API.Controllers
         #region Phân quyền
 
         [HttpPut("{id}/categories")]
+        [Authorize]
         public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
         {
             if (!ModelState.IsValid)
