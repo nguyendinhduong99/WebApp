@@ -15,6 +15,8 @@ namespace Admin_APP.Services.Product
 
         Task<bool> UpdateProduct(UpdateProduct_DTO request);
 
+        Task<bool> DeleteProduct(int Id);
+
         Task<ApiResult<bool>> CategoryAssign(int Id, CategoryAssignRequest request);
 
         Task<ProductViewModel> GetById(int Id, string languageId);

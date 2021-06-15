@@ -125,6 +125,10 @@
     <value>Adds product to compair</value>
     <comment>/Product/Catrgory</comment>
   </data>
+  <data name="ALREADY REGISTERED ?" xml:space="preserve">
+    <value>ALREADY REGISTERED ?</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>categories</value>
     <comment>Layouts</comment>
@@ -137,6 +141,10 @@
     <value>Contact</value>
     <comment>Layouts</comment>
   </data>
+  <data name="CREATE YOUR ACCOUNT" xml:space="preserve">
+    <value>CREATE YOUR ACCOUNT</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Delivery" xml:space="preserve">
     <value>Delivery</value>
     <comment>Layouts</comment>
@@ -145,9 +153,17 @@
     <value>English</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Enter your e-mail address to create an account." xml:space="preserve">
+    <value>Enter your e-mail address to create an account.</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Featured Products</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+    <comment>Common</comment>
   </data>
   <data name="I'm a paragraph. Click here" xml:space="preserve">
     <value>I'm a paragraph. Click here</value>
@@ -157,13 +173,25 @@
     <value>Latest Products</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Logging Accout" xml:space="preserve">
+    <value>Logging Accout</value>
+    <comment>Common</comment>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Manicure" xml:space="preserve">
     <value>Manicure</value>
     <comment>/Product/Category</comment>
+  </data>
+  <data name="More Details" xml:space="preserve">
+    <value>More Details</value>
+    <comment>/Product/Detail</comment>
   </data>
   <data name="Name A - Z" xml:space="preserve">
     <value>Name A - Z</value>
@@ -197,6 +225,14 @@
     <value>Priduct Stoke</value>
     <comment>/Product/Catrgory</comment>
   </data>
+  <data name="product Details" xml:space="preserve">
+    <value>product Details</value>
+    <comment>/Product/Detail</comment>
+  </data>
+  <data name="product in stock" xml:space="preserve">
+    <value>product in stock</value>
+    <comment>common</comment>
+  </data>
   <data name="products" xml:space="preserve">
     <value>products</value>
     <comment>Common</comment>
@@ -204,6 +240,14 @@
   <data name="productUrl" xml:space="preserve">
     <value>products</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Related Products</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>Sign in</value>
+    <comment>Common</comment>
   </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sort By</value>
