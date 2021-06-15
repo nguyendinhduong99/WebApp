@@ -114,6 +114,7 @@ namespace Application.Catalog.Products
                                     join p_i_c in _context.Product_in_Category on c.Id equals p_i_c.CategoryId
                                     where p_i_c.ProductId == productId && ct.LanguageId == languageId
                                     select ct.Name).ToListAsync();
+            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
             var productViewModel = new ProductViewModel()
             {
                 //product
@@ -140,7 +141,8 @@ namespace Application.Catalog.Products
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
                 LanguageId = productTranslation.LanguageId,
-                Categories = categories
+                Categories = categories,
+                ThumbnailImage = image != null ? image.ImagePath : "no-image-duongrbt.png"
             };
             return productViewModel;
         }

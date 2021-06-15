@@ -178,5 +178,33 @@ namespace Admin_APP.Controllers
         }
 
         #endregion update
+
+        #region Xoa
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new ProductDeleteRequest()
+            {
+                id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var result = await _productApiClient.DeleteProduct(request.id);
+            if (result)
+            {
+                TempData["thongbao"] = "Xóa OK";
+                return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            }
+            ModelState.AddModelError("", "Xóa thất bại");
+            return View(request);
+        }
+
+        #endregion Xoa
     }
 }

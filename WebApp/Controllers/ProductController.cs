@@ -21,9 +21,14 @@ namespace WebApp.Controllers
             _categoriesApiClient = categoriesApiClient;
         }
 
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id, string culture)
         {
-            return View();
+            var product = await _productApiClient.GetById(id, culture);
+            return View(new ProductDetailViewModel()
+            {
+                Category = await _categoriesApiClient.GetById(culture, id),
+                Product = product
+            });
         }
 
         public async Task<IActionResult> Category(string culture, int id, int page = 1)

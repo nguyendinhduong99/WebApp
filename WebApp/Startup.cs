@@ -7,6 +7,7 @@ using Admin_APP.Services.User;
 using API_Integration.Services.Categories;
 using API_Integration.Services.Slide;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,12 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Users/Forbidden/";
+                });
             var cultures = new[]
             {
                 new CultureInfo("en"),
@@ -81,6 +88,7 @@ namespace WebApp
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +107,7 @@ namespace WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseRouting();
 

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 using ViewModels.Common;
-using ViewModels.System.Role;
 using ViewModels.System.User;
 
 namespace Admin_APP.Controllers
@@ -196,7 +195,7 @@ namespace Admin_APP.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _roleApiClient.RoleAssign(request.Id, request);
+            var result = await _userApiClient.RoleAssign(request.Id, request);
 
             if (result.IsSuccessed)
             {

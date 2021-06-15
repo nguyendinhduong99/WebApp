@@ -125,6 +125,10 @@
     <value>Thêm sản phẩm để so sánh</value>
     <comment>/Product/Catrgory</comment>
   </data>
+  <data name="ALREADY REGISTERED ?" xml:space="preserve">
+    <value>ĐĂNG NHẬP</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>danh-muc</value>
     <comment>Layouts</comment>
@@ -137,6 +141,10 @@
     <value>Liên hệ</value>
     <comment>Layouts</comment>
   </data>
+  <data name="CREATE YOUR ACCOUNT" xml:space="preserve">
+    <value>TẠO TÀI KHOẢN</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Delivery" xml:space="preserve">
     <value>Giao hàng</value>
     <comment>Layouts</comment>
@@ -145,9 +153,17 @@
     <value>Tiếng Anh</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Enter your e-mail address to create an account." xml:space="preserve">
+    <value>Nhập tên tài khoản muốn lập</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang Chủ</value>
+    <comment>Common</comment>
   </data>
   <data name="I'm a paragraph. Click here" xml:space="preserve">
     <value>Mô tả sản phẩm. Bấm vào đây</value>
@@ -157,13 +173,25 @@
     <value>Sản phẩm mới nhất</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Logging Accout" xml:space="preserve">
+    <value>Tài khoản truy cập</value>
+    <comment>Common</comment>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Đăng nhập</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Đăng xuất</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Manicure" xml:space="preserve">
     <value>Thiết bị cắt</value>
     <comment>/Product/Category</comment>
+  </data>
+  <data name="More Details" xml:space="preserve">
+    <value>Xem chi tiết khác</value>
+    <comment>/Product/Detail</comment>
   </data>
   <data name="Name A - Z" xml:space="preserve">
     <value>Tên từ A-Z</value>
@@ -197,6 +225,14 @@
     <value>Số lượng tồn kho</value>
     <comment>/Product/Catrgory</comment>
   </data>
+  <data name="product Details" xml:space="preserve">
+    <value>Chi Tiết Sản Phẩm</value>
+    <comment>/Product/Detail</comment>
+  </data>
+  <data name="product in stock" xml:space="preserve">
+    <value>sản phẩm trong kho</value>
+    <comment>Common</comment>
+  </data>
   <data name="products" xml:space="preserve">
     <value>san-pham</value>
     <comment>Common</comment>
@@ -204,6 +240,14 @@
   <data name="productUrl" xml:space="preserve">
     <value>san-pham</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Sản phẩm tương tự</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>Đăng Nhập</value>
+    <comment>Common</comment>
   </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sắp xếp theo</value>

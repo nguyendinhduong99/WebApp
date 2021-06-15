@@ -117,6 +117,15 @@ namespace Admin_APP.Services.Product
 
         #endregion cập nhật sp
 
+        #region xoa
+
+        public async Task<bool> DeleteProduct(int Id)
+        {
+            return await Delete($"/api/products/{Id}");
+        }
+
+        #endregion xoa
+
         #region GET LIST PRODUCT
 
         public async Task<PagedResult<ProductViewModel>> GetPaging(GetManageProductPagingRequest request)

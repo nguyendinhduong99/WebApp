@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ViewModels.Common;
 
-namespace ViewModels.System.Role
+namespace ViewModels.System.User
 {
     public class RoleAssignRequest
     {
