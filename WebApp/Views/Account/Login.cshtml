@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ViewModels.System.User.LoginRequest
+@{
     ViewData["Title"] = "Login";
     var culture = CultureInfo.CurrentCulture.Name;
 }
@@ -7,47 +8,40 @@
     <li><a href="index.html"><localize>Home</localize></a> <span class="divider">/</span></li>
     <li class="active"><localize>Login</localize></li>
 </ul>
-<h3><localize>Login</localize></h3>
+<h3><localize>Loginn</localize></h3>
 <hr class="soft" />
 
 <div class="row">
-    <div class="span4">
+
+    <div class="span8">
         <div class="well">
-            <h5><localize>CREATE YOUR ACCOUNT</localize></h5><br />
-            <localize>Enter your e-mail address to create an account.</localize><br /><br /><br />
-            <form action="register.html">
-                <div class="control-group">
-                    <label class="control-label" for="inputEmail0">Name</label>
-                    <div class="controls">
-                        <input class="span3" type="text" name="UserName" placeholder="Email">
-                    </div>
-                </div>
-                <div class="controls">
-                    <button type="submit" class="btn block"><localize>Create Your Account</localize></button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="span1"> &nbsp;</div>
-    <div class="span4">
-        <div class="well">
-            <h5><localize>ALREADY REGISTERED ?</localize></h5>
+            @*<h5><localize>ALREADY REGISTERED ?</localize></h5>*@
             <form action="/@culture/Account/Login" method="post">
+                <div asp-validation-summary="All" class="text-error">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputEmail1">Email</label>
+                    <label class="control-label" for="inputEmail1"><localize>User Name</localize></label>
                     <div class="controls">
-                        <input class="span3" type="text" name="UserName" placeholder="Email">
+                        <input class="span3" type="text" asp-for="UserName">
+                        @*<span asp-validation-for="UserName" class="text-error"></span>*@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword1">Password</label>
+                    <label class="control-label" for="inputPassword1"><localize>Password</localize></label>
                     <div class="controls">
-                        <input type="password" class="span3" name="Password" placeholder="Password">
+                        <input type="password" class="span3" asp-for="Password">
+                        @*<span asp-validation-for="Password" class="text-error"></span>*@
                     </div>
                 </div>
+
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn"><localize>Sign in</localize></button> <a href="forgetpass.html"><localize>Forget password?</localize></a>
+                        <button type="submit" class="btn"><localize>Sign in</localize></button>
+                    </div>
+                    <div class="controls">
+                        <a href="forgetpass.html"><localize>Forget password?</localize></a>
+                        <a href="/@culture/Account/Register"><localize>Create Your Account</localize></a>
                     </div>
                 </div>
             </form>

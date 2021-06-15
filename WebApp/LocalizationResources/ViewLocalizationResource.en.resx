@@ -129,6 +129,10 @@
     <value>ALREADY REGISTERED ?</value>
     <comment>/Account/Login</comment>
   </data>
+  <data name="Birth day" xml:space="preserve">
+    <value>Birth day</value>
+    <comment>Common</comment>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>categories</value>
     <comment>Layouts</comment>
@@ -137,13 +141,21 @@
     <value>Compair Product</value>
     <comment>/Product/Category</comment>
   </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>ConfirmPassword</value>
+    <comment>Common</comment>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
     <comment>Layouts</comment>
   </data>
-  <data name="CREATE YOUR ACCOUNT" xml:space="preserve">
-    <value>CREATE YOUR ACCOUNT</value>
+  <data name="Create Your Account" xml:space="preserve">
+    <value>Create Your Account</value>
     <comment>/Account/Login</comment>
+  </data>
+  <data name="CREATE YOUR ACCOUNTS" xml:space="preserve">
+    <value>CREATE YOUR ACCOUNT</value>
+    <comment>Common</comment>
   </data>
   <data name="Delivery" xml:space="preserve">
     <value>Delivery</value>
@@ -161,6 +173,14 @@
     <value>Featured Products</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="First name" xml:space="preserve">
+    <value>First name</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Forget password?" xml:space="preserve">
+    <value>Forget password? |</value>
+    <comment>/Account/Login</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
     <comment>Common</comment>
@@ -168,6 +188,10 @@
   <data name="I'm a paragraph. Click here" xml:space="preserve">
     <value>I'm a paragraph. Click here</value>
     <comment>/Product/Catrgory</comment>
+  </data>
+  <data name="Last name" xml:space="preserve">
+    <value>Last name</value>
+    <comment>Common</comment>
   </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Latest Products</value>
@@ -180,6 +204,10 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Loginn" xml:space="preserve">
+    <value>ALooooooo</value>
+    <comment>/Account/Login</comment>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
@@ -207,6 +235,10 @@
   </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
     <comment>Common</comment>
   </data>
   <data name="Pedicure" xml:space="preserve">
@@ -241,8 +273,16 @@
     <value>products</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+    <comment>Common</comment>
+  </data>
   <data name="Related Products" xml:space="preserve">
     <value>Related Products</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Required field" xml:space="preserve">
+    <value>Required field</value>
     <comment>Common</comment>
   </data>
   <data name="Sign in" xml:space="preserve">
@@ -257,6 +297,10 @@
     <value>Specials Offer</value>
     <comment>Layouts</comment>
   </data>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
+    <comment>Common</comment>
+  </data>
   <data name="Vietnamese" xml:space="preserve">
     <value>Vietnamese</value>
     <comment>Layouts</comment>
@@ -264,5 +308,9 @@
   <data name="VIEW" xml:space="preserve">
     <value>VIEW</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Your personal information" xml:space="preserve">
+    <value>Your personal information</value>
+    <comment>/Account/Register</comment>
   </data>
 </root>

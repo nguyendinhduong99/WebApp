@@ -1,0 +1,85 @@
+﻿@model ViewModels.System.User.RegisterRequest
+@{
+    ViewData["Title"] = "Register";
+}
+
+<ul class="breadcrumb">
+    <li><a href="index.html"><localize>Home</localize></a> <span class="divider">/</span></li>
+    <li class="active"><localize>Registration</localize></li>
+</ul>
+<h3> <localize>Registration</localize></h3>
+<div class="well">
+
+    <form asp-action="Register" asp-controller="Account" method="post" class="form-horizontal">
+        <h4><localize><localize>Your personal information</localize></localize></h4>
+        <div asp-validation-summary="All" class="text-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputFname1"><localize>First name</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="text" asp-for="FirstName">
+                <span asp-validation-for="FirstName" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLnam"><localize>Last name</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="text" asp-for="LastName">
+                <span asp-validation-for="LastName" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLnam"><localize>Birth day</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="date" asp-for="Dob">
+                <span asp-validation-for="Dob" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="input_email">Email <sup>*</sup></label>
+            <div class="controls">
+                <input type="email" asp-for="Email">
+                <span asp-validation-for="Email" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLnam"><localize>Tel</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="number" asp-for="PhoneNumber">
+                <span asp-validation-for="PhoneNumber" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLnam"><localize>User Name</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="text" asp-for="UserName">
+                <span asp-validation-for="UserName" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword1"><localize>Password</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="password" asp-for="PassWord">
+                <span asp-validation-for="PassWord" class="text-error"></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword1"><localize>ConfirmPassword</localize> <sup>*</sup></label>
+            <div class="controls">
+                <input type="password" asp-for="ConfirmPass">
+                <span asp-validation-for="ConfirmPass" class="text-error"></span>
+            </div>
+        </div>
+
+        <p><sup>*</sup><localize>Required field</localize>	</p>
+
+        <div class="control-group">
+            <div class="controls">
+                <input type="hidden" name="email_create" value="1">
+                <input type="hidden" name="is_new_customer" value="1">
+                <input class="btn btn-large btn-success" type="submit" value="Register" />
+            </div>
+        </div>
+    </form>
+</div>

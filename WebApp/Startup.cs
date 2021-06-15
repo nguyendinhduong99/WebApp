@@ -6,6 +6,7 @@ using Admin_APP.Services.Slide;
 using Admin_APP.Services.User;
 using API_Integration.Services.Categories;
 using API_Integration.Services.Slide;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using ViewModels.System.User;
 using WebApp.LocalizationResources;
 
 namespace WebApp
@@ -50,8 +52,9 @@ namespace WebApp
                 new CultureInfo("vi"),
             };
 
-            services.AddControllersWithViews().
-                AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
+                .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
             {
                 // When using all the culture providers, the localization process will
                 // check all available culture providers in order to detect the request culture.
