@@ -40,9 +40,14 @@ namespace WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                return View(request);
             }
             var result = await _userApiClient.Authenticate(request);
+            if (result.ResultObj == null)
+            {
+                ModelState.AddModelError("", "Đăng nhập thất bại");
+                return View();
+            }
             var userPricipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
@@ -81,5 +86,47 @@ namespace WebApp.Controllers
             ClaimsPrincipal claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validateToken);
             return claimsPrincipal;
         }
+
+        #region Đăng Ký
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+            var result = await _userApiClient.RegisterUser(request);
+            if (!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            //TempData["thongbao"] = "Thêm OK";
+            //return RedirectToAction("Index"); //chuyển đến cái thằng có tên Index
+            var loginResult = await _userApiClient.Authenticate(new LoginRequest()
+            {
+                UserName = request.UserName,
+                Password = request.PassWord,
+                RememberMe = true
+            });
+            var userPrincipal = this.ValidateToken(loginResult.ResultObj);
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                IsPersistent = false
+            };
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, loginResult.ResultObj);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                userPrincipal, authProperties);
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion Đăng Ký
     }
 }
