@@ -32,20 +32,5 @@ namespace Backend_API.Controllers
         }
 
         #endregion Lấy cả
-
-        #region Phân quyền
-
-        [HttpPut("{id}/roles")]
-        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _roleService.RoleAssign(id, request);
-            if (!result.IsSuccessed)
-                return BadRequest(result);
-            return Ok(result);
-        }
-
-        #endregion Phân quyền
     }
 }

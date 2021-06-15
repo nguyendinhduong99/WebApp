@@ -10,8 +10,5 @@ namespace Admin_APP.Services.Role
     public interface IRoleApiClient
     {
         Task<ApiResult<List<RoleViewModel>>> GetAll();
-
-        Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
-        
     }
 }
