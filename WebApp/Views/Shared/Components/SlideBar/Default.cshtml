@@ -2,7 +2,7 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @{ var culture = CultureInfo.CurrentCulture.Name; }
 <div id="slidebar" class="span3">
-    <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
+    <div class="well well-small"><a id="myCart" href="/@culture/cart"><img src="/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
     <ul id="slideManu" class="nav nav-tabs nav-stacked">
         @{ var parents = Model.Where(x => x.ParentId == null); }
         @for (int index = 0; index < parents.Count(); index++)
@@ -11,19 +11,22 @@
             var children = Model.Where(x => x.ParentId == parent.Id);
             if (children.Any())
             {
-<li class="subMenu open">
-    <a> @parent.Name</a>
-    <ul>
-        @foreach (var item in children)
-        {
-<li><a class="active" href="/@culture/@_loc["categoryUrl"]/@item.Id"><i class="icon-chevron-right"></i>@item.Name </a></li>}
-    </ul>
-</li> }
-                else
-                {
-<li><a href="/@culture/@_loc["categoryUrl"]/@parent.Id">@parent.Name</a></li>}
-
+                <li class="subMenu open">
+                    <a> @parent.Name</a>
+                    <ul>
+                        @foreach (var item in children)
+                        {
+                            <li><a class="active" href="/@culture/@_loc["categoryUrl"]/@item.Id"><i class="icon-chevron-right"></i>@item.Name </a></li>
+                        }
+                    </ul>
+                </li>
             }
+            else
+            {
+                <li><a href="/@culture/@_loc["categoryUrl"]/@parent.Id">@parent.Name</a></li>
+            }
+
+        }
     </ul>
     <br />
     @*<div class="thumbnail">
