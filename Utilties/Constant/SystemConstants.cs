@@ -7,6 +7,7 @@ namespace Utilties.Constant
     public class SystemConstants
     {
         public const string MainConnectionString = "Web_App";
+        public const string CartSession = "CartSession";
 
         public class AppSettings
         {
