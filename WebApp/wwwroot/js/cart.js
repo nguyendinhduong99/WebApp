@@ -63,8 +63,7 @@
         $('body').on('click', '.btn-remove', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
-            const quantity = parseInt($('#txt_quantity_' + id).val()) - 1;
-            baseUpdate(id, quantity);
+            baseUpdate(id, 0);
         });
     }
     function baseUpdate(id, quantity) {
@@ -78,7 +77,7 @@
             },
             success: function (res) {
                 $('#lbl_number_items_header').text(res.length);
-                loadData(res);
+                loadData();
             },
             error: function (err) { console.log(err); }
         });
