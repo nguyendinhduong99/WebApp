@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\themes\less\oregional\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="LazZiya.ExpressLocalization" Version="5.0.0-beta1" />
     <PackageReference Include="LazZiya.TagHelpers" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />

@@ -66,12 +66,13 @@ namespace WebApp.Controllers
                 Image = product.ThumbnailImage,
                 Price = product.Price
             };
+            if (id == cartItem.ProductId)
+            {
+                //if (currentCart == null)
+                //    currentCart = new List<CartItemViewModel>();
 
-            //if (currentCart == null)
-            //    currentCart = new List<CartItemViewModel>();
-
-            currentCart.Add(cartItem);
-
+                currentCart.Add(cartItem);
+            }
             //convert string thành list
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
             return Ok(currentCart);
