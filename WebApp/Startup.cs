@@ -5,6 +5,7 @@ using Admin_APP.Services.Role;
 using Admin_APP.Services.Slide;
 using Admin_APP.Services.User;
 using API_Integration.Services.Categories;
+using API_Integration.Services.Order;
 using API_Integration.Services.Slide;
 using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
@@ -92,6 +93,7 @@ namespace WebApp
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<ICategoriesApiClient, CategoriesApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
+            //services.AddTransient<IOrderApiClient,OrderApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

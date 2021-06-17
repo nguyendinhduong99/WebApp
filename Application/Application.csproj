@@ -13,5 +13,9 @@
     <ProjectReference Include="..\Utilties\Utilties.csproj" />
     <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Catalog\Order\" />
+  </ItemGroup>
 
 </Project>

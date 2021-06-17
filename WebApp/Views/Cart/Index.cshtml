@@ -2,6 +2,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{ var culture = CultureInfo.CurrentCulture.Name; }
 @section scripts{
 
     <script src="/js/cart.js"></script>
@@ -21,7 +22,7 @@
 </h3>
 <hr class="soft" />
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="tbl_cart">
     <thead>
         <tr>
             <th>Product</th>
@@ -41,5 +42,5 @@
     </tfoot>
 </table>
 
-<a href="https://localhost:5003/" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-<a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+<a href="/" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+<a href="/@culture/Cart/Checkout" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
